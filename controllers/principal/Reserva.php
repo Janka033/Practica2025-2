@@ -79,7 +79,7 @@ class Reserva extends Controller
             $data['id'] = $habitacion;
             $data['title'] = 'COMPROBANDO';
             $data['start'] = $f_llegada;
-            $data['end'] = $f_salida;
+            $data['end'] = date("Y-m-d", strtotime($f_salida . " +1 day"));;
             $data['color'] = '#ffc107';
             array_push($results, $data);
             echo json_encode($results, JSON_UNESCAPED_UNICODE);
