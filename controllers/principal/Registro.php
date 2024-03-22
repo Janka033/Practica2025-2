@@ -26,7 +26,7 @@ class Registro extends Controller
                 $clave = strClean($_POST['clave']);
                 $confirmar = strClean($_POST['confirmar']);
                 $hash = password_hash($clave, PASSWORD_DEFAULT);
-                $rol = 2;
+                $rol = 3;
                 if ($clave == $confirmar) {
                     //VERIFICAR UNIQUE
                     $verficarUser = $this->model->validarUnique('usuario', $usuario, 0);

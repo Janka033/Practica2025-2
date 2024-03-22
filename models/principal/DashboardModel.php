@@ -21,6 +21,11 @@ class DashboardModel extends Query{
         return $this->select("SELECT COUNT(id) AS total FROM reservas");
     }
 
+    public function totalReservaHabitacion($id_habitacion)
+    {
+        return $this->select("SELECT COUNT(id) AS total FROM reservas WHERE id_habitacion = $id_habitacion");
+    }
+
     public function getReserva($id_reserva) {
         $sql = "SELECT r.*, h.estilo, h.descripcion, h.precio, 
         h.numero, h.capacidad, h.foto, CONCAT(u.nombre, ' ', u.apellido) AS cliente

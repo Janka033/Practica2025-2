@@ -50,6 +50,7 @@ class Reserva extends Controller
                 } else {
                     $data['mensaje'] = 'NO DISPONIBLE';
                     $data['tipo'] = 'danger';
+                    unset($_SESSION['reserva']);
                 }
                 $data['empresa'] = $this->model->getEmpresa();
                 $data['habitaciones'] = $this->model->getHabitaciones();

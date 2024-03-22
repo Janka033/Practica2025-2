@@ -184,7 +184,7 @@ function editarHabit(idHabitacion) {
             numero.value = res.numero;
             precio.value = res.precio;
             foto_actual.value = res.foto;
-            containerPreview.innerHTML = `<img class="img-thumbnail" src="${base_url + 'assets/img/habitaciones/' + res.foto}" width="200">
+            containerPreview.innerHTML = `<img class="img-thumbnail" src="${ruta_principal + 'assets/img/habitaciones/' + res.foto}" width="200">
             <button class="btn btn-danger" type="button" onclick="deleteImg()"><i class="fas fa-trash"></i></button>`;
             btnAccion.textContent = 'Actualizar';
             firstTab.show()

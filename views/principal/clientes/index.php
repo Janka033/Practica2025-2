@@ -59,6 +59,15 @@
     <div class="card-body">
         <h4 class="card-title">Tus reservas</h4>
         <hr>
+        <?php if (!empty($_SESSION['reserva'])) { ?>
+<div
+    class="alert alert-warning"
+    role="alert"
+>
+    <strong>Reserva Pendiente</strong> <a href="<?php echo RUTA_PRINCIPAL . 'reserva/pendiente'; ?>">CLICK AQUI</a>
+</div>
+
+            <?php } ?>
         <div
             class="alert alert-info alert-dismissible fade show"
             role="alert"

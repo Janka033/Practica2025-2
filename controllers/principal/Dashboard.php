@@ -54,7 +54,7 @@ class Dashboard extends Controller
         $data['title'] = 'Calificar Habitación';
         $data['reserva'] = $this->model->getReserva($id);
         if (!empty($data['reserva']) && $data['reserva']['id_usuario'] == $_SESSION['id_usuario']) {
-            $data['totalReserva'] = $this->model->totalReservas();
+            $data['totalReserva'] = $this->model->totalReservaHabitacion($data['reserva']['id_habitacion']);
             //RECUPERAR GALERIAS
             $rutas = 'assets/img/habitaciones/' . $data['reserva']['id_habitacion'] . '/';
             $imagenes = [];
