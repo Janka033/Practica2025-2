@@ -121,7 +121,7 @@ class Reserva extends Controller
             "items" => [
                 [
                     "title" => $data['habitacion']['estilo'],
-                    "quantity" => $cantidad->d,
+                    "quantity" => $cantidad->d + 1,
                     'currency_id' => MONEDA_MP,
                     "unit_price" => $precio
                 ]
@@ -129,7 +129,7 @@ class Reserva extends Controller
             'back_urls' => $back_urls
         ]);
         $data['preference_id'] = $preference->id;
-        $data['total'] = $cantidad->d * $precio;
+        $data['total'] = ($cantidad->d + 1) * $precio;
         $this->views->getView('principal/clientes/reservas/pendiente', $data);
     }
 
@@ -153,7 +153,7 @@ class Reserva extends Controller
         $habitacion = $this->model->getHabitacion($_SESSION['reserva']['habitacion']);
         $descripcion = $_SESSION['notas'];
         $reserva = [
-            'monto' => $habitacion['precio'] * $cantidad->d,
+            'monto' => $habitacion['precio'] * ($cantidad->d + 1),
             'num_transaccion' => $_GET['payment_id'],
             'cod_reserva' => uniqid(),
             'fecha_ingreso' => $_SESSION['reserva']['f_llegada'],
