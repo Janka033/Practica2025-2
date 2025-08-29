@@ -110,11 +110,6 @@ include_once 'views/template/header-principal.php'; ?>
                 <div class="explore-content ml-30">
                     <h2>¡Bienvenido al <?= TITLE; ?> Su Refugio de Lujo y Hospitalidad!</h2>
                     <p>¡Bienvenido al <?= TITLE; ?> Es un placer darle la bienvenida a nuestro oasis de comodidad y hospitalidad. En este espacio diseñado para su confort, nos esforzamos por crear una experiencia inolvidable para usted. Desde el momento en que cruza nuestras puertas, nos comprometemos a brindarle un servicio excepcional y atención personalizada en cada detalle de su estancia. Permítanos ser su hogar lejos del hogar mientras disfruta de todas las maravillas que nuestro hotel y sus alrededores tienen para ofrecer. ¡Bienvenido a una experiencia única llena de momentos especiales y recuerdos inolvidables!</p>
-
-                    <a href="#" class="default-btn">
-                        explora más
-                        <i class="flaticon-right"></i>
-                    </a>
                 </div>
             </div>
         </div>
@@ -127,18 +122,26 @@ include_once 'views/template/header-principal.php'; ?>
     <div class="container">
         <div class="section-title">
             <span>INSTALACIONES</span>
-            <h2>Dando completamente asombrosa</h2>
+            <h2>Servicios Populares</h2>
         </div>
         <div class="row">
             <div class="col-lg-3 col-sm-6">
                 <div class="single-facilities-wrap">
                     <div class="single-facilities">
-                        <i class="facilities-icon flaticon-pickup"></i>
-                        <h3>Recoger y dejar​</h3>
+                        <i class="facilities-icon flaticon-podium"></i>
+                        <h3>Wifi Gratis</h3>
                         <p>"Servicio de transporte cómodo y confiable para su conveniencia."</p>
-                        <a href="service-details.html" class="icon-btn">
-                            <i class="flaticon-right"></i>
-                        </a>
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-sm-6">
+                <div class="single-facilities-wrap">
+                    <div class="single-facilities">
+                        <i class="facilities-icon flaticon-checked-1"></i>
+                        <h3>Habitaciones Familiares​​​​</h3>
+                        <p>"¡Saludos! Disfrute de nuestra bebida de bienvenida mientras se relaja."</p>
+                        
                     </div>
                 </div>
             </div>
@@ -146,35 +149,19 @@ include_once 'views/template/header-principal.php'; ?>
                 <div class="single-facilities-wrap">
                     <div class="single-facilities">
                         <i class="facilities-icon flaticon-coffee-cup"></i>
-                        <h3>Bebida de bienvenida​​​​</h3>
-                        <p>"¡Saludos! Disfrute de nuestra bebida de bienvenida mientras se relaja."</p>
-                        <a href="service-details.html" class="icon-btn">
-                            <i class="flaticon-right"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-sm-6">
-                <div class="single-facilities-wrap">
-                    <div class="single-facilities">
-                        <i class="facilities-icon flaticon-garage"></i>
-                        <h3>Plaza de aparcamiento</h3>
+                        <h3>Buen Desayuno</h3>
                         <p>"Estacionamiento seguro y conveniente para su vehículo."</p>
-                        <a href="service-details.html" class="icon-btn">
-                            <i class="flaticon-right"></i>
-                        </a>
+                        
                     </div>
                 </div>
             </div>
             <div class="col-lg-3 col-sm-6">
                 <div class="single-facilities-wrap">
                     <div class="single-facilities">
-                        <i class="facilities-icon flaticon-water"></i>
-                        <h3>Frío Caliente y Agua​</h3>
+                        <i class="facilities-icon flaticon-slow"></i>
+                        <h3>Habitaciones sin Humo​</h3>
                         <p>"Refresque su sed con agua fría o caliente disponible en todo momento."</p>
-                        <a href="service-details.html" class="icon-btn">
-                            <i class="flaticon-right"></i>
-                        </a>
+                        
                     </div>
                 </div>
             </div>
@@ -182,28 +169,6 @@ include_once 'views/template/header-principal.php'; ?>
     </div>
 </section>
 <!-- End Facilities Area -->
-
-<!-- End Incredible Area -->
-<section class="incredible-area ptb-140 jarallax">
-    <div class="container">
-        <div class="incredible-content">
-            <a href="https://vod-progressive.akamaized.net/exp=1710614108~acl=%2Fvimeo-prod-skyfire-std-us%2F01%2F930%2F14%2F354651355%2F1443116478.mp4~hmac=07a6b6f8893a62fc57928354d9803f393920035279bad3dc94ef4b0234e6b344/vimeo-prod-skyfire-std-us/01/930/14/354651355/1443116478.mp4?filename=file.mp4" class="video-btn popup-youtube">
-                <i class="flaticon-play-button"></i>
-            </a>
-            <h2><span>¡Increíble!</span> Vas a venir hoy</h2>
-            <p>"¡Qué emocionante! Estamos ansiosos por verte hoy. ¡Prepárate para una experiencia increíble juntos!"</p>
-            <a href="#" class="default-btn">
-                Únete a nosotros hoy
-                <i class="flaticon-right"></i>
-            </a>
-        </div>
-    </div>
-    <div class="white-shape">
-        <img src="<?php echo RUTA_PRINCIPAL . 'assets/principal'; ?>/img/shape/white-shape-top.png" alt="Image">
-        <img src="<?php echo RUTA_PRINCIPAL . 'assets/principal'; ?>/img/shape/white-shape-bottom.png" alt="Image">
-    </div>
-</section>
-<!-- End Incredible Area -->
 
 <!-- Start Our Rooms Area -->
 <section class="our-rooms-area pt-60 pb-100">
@@ -253,56 +218,6 @@ include_once 'views/template/header-principal.php'; ?>
     </div>
 </section>
 <!-- End Our Rooms Area -->
-
-<!-- Start Restaurants Area -->
-<section class="restaurants-area pb-100">
-    <div class="container-fluid p-0">
-        <div class="section-title">
-            <span>Restaurantes</span>
-            <h2>"¡Bienvenido al sabor incomparable!"</h2>
-        </div>
-
-        <div class="restaurants-wrap owl-carousel owl-theme">
-            <div class="single-restaurants bg-1">
-                <i class="restaurants-icon flaticon-coffee-cup"></i>
-                <span>Restaurantes</span>
-                <p>Saborea la excelencia en cada bocado! Bienvenido a nuestro restaurante, donde cada plato es una obra maestra de sabor y dedicación.</p>
-                <a href="#" class="default-btn">
-                    Explora más
-                    <i class="flaticon-right"></i>
-                </a>
-            </div>
-            <div class="single-restaurants bg-2">
-                <i class="restaurants-icon flaticon-swimming"></i>
-                <span>Piscina</span>
-                <p>Un oasis de frescura y tranquilidad, listo para ser explorado y disfrutado, ofreciendo momentos de relax y diversión sin fin.</p>
-                <a href="#" class="default-btn">
-                    Explora más
-                    <i class="flaticon-right"></i>
-                </a>
-            </div>
-            <div class="single-restaurants bg-3">
-                <i class="restaurants-icon flaticon-speaker"></i>
-                <span>Sala de conferencias</span>
-                <p>Donde los sueños se convierten en realidad, uno se habla de negocios y se forjan alianzas duraderas en un entorno inspirador.</p>
-                <a href="#" class="default-btn">
-                    Explora más
-                    <i class="flaticon-right"></i>
-                </a>
-            </div>
-            <div class="single-restaurants bg-4">
-                <i class="restaurants-icon flaticon-podium"></i>
-                <span>Mejor tarifa</span>
-                <p>Tu destino para la máxima calidad al mejor precio, donde la excelencia y el ahorro se fusionan para una experiencia incomparable.</p>
-                <a href="#" class="default-btn">
-                    Explora más
-                    <i class="flaticon-right"></i>
-                </a>
-            </div>
-        </div>
-    </div>
-</section>
-<!-- End Restaurants Area -->
 
 <!-- start Testimonials Area -->
 <section class="testimonials-area pb-100">

@@ -151,7 +151,7 @@
             <div class="row align-items-center">
                 <div class="col-lg-6">
                     <div class="copy-right">
-                        <p>Copyright @<?php echo date('Y'); ?> <a href="<?php echo RUTA_PRINCIPAL; ?>"><?php echo TITLE; ?></a>. All Rights Reserved</p>
+                        <p>Copyright @<?php echo date('Y'); ?> <a href="<?php echo RUTA_PRINCIPAL; ?>"><?php echo TITLE; ?></a>. Todos los derechos reservados</p>
                     </div>
                 </div>
             </div>

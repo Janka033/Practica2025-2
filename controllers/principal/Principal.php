@@ -9,7 +9,7 @@ class Principal extends Controller
     }
     public function index()
     {
-        $data['title'] = 'Página principal';
+        $data['title'] = 'Hospedajes';
         //TRAER SLIDERS
         $data['sliders'] = $this->model->getSliders();
         $data['empresa'] = $this->model->getEmpresa();
