@@ -14,6 +14,11 @@ class Query extends Conexion{
         return $result->fetch(PDO::FETCH_ASSOC);
     }
 
+    public function update($sql) {
+        $stmt = $this->pdo->prepare($sql);
+        return $stmt->execute();
+    }
+
     //RECUPERAR TODOS LOS REGISTROS
     public function selectAll($sql){
         $result = $this->pdo->prepare($sql);

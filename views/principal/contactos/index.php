@@ -6,8 +6,8 @@ include_once 'views/template/portada.php'; ?>
     <div class="container">
         <div class="section-title">
             <span>Contactos</span>
-            <h2>Si tienes dudas envianos un mensaje via correo</h2>
-            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eaque quibusdam deleniti porro praesentium. Aliquam minus quisquam velit in at nam.</p>
+            <h2>Si tienes dudas envianos un mensaje via Whatsapp</h2>
+            <p></p>
         </div>
         <div class="row">
             <div class="col-lg-6">
@@ -29,53 +29,134 @@ include_once 'views/template/portada.php'; ?>
 
                         <?php } ?>
 
-                        <form id="contactForm">
-                            <div class="row">
-                                <div class="col-lg-6 col-sm-6">
-                                    <div class="form-group">
-                                        <input type="text" name="name" id="name" class="form-control" required data-error="por favor, escriba su nombre" placeholder="Su nombre">
-                                        <div class="help-block with-errors"></div>
-                                    </div>
-                                </div>
+                        <!-- Nuevo Formulario Contacto vía WhatsApp -->
+<form id="contactForm" novalidate>
+    <div class="row">
+        <div class="col-lg-6 col-sm-6">
+            <div class="form-group">
+                <input type="text" name="name" id="name" class="form-control" placeholder="Su nombre">
+                <div class="invalid-feedback" id="nameError"></div>
+            </div>
+        </div>
+        <div class="col-lg-6 col-sm-6">
+            <div class="form-group">
+                <input type="email" name="email" id="email" class="form-control" placeholder="Tu correo electrónico">
+                <div class="invalid-feedback" id="emailError"></div>
+            </div>
+        </div>
+        <div class="col-lg-6 col-sm-6">
+            <div class="form-group">
+                <input type="text" name="phone_number" id="phone_number" class="form-control" placeholder="Su teléfono" maxlength="10">
+                <div class="invalid-feedback" id="phoneError"></div>
+            </div>
+        </div>
+        <div class="col-lg-6 col-sm-6">
+            <div class="form-group">
+                <input type="text" name="msg_subject" id="msg_subject" class="form-control" placeholder="Tu asunto">
+                <div class="invalid-feedback" id="subjectError"></div>
+            </div>
+        </div>
+        <div class="col-lg-12 col-md-12">
+            <div class="form-group">
+                <textarea name="message" class="form-control textarea-hight" id="message" cols="30" rows="4" placeholder="Tu mensaje"></textarea>
+                <div class="invalid-feedback" id="messageError"></div>
+            </div>
+        </div>
+        <div class="col-lg-12 col-md-12">
+            <button type="submit" class="default-btn btn-two">
+                Enviar por WhatsApp
+                <i class="flaticon-right"></i>
+            </button>
+        </div>
+    </div>
+</form>
 
-                                <div class="col-lg-6 col-sm-6">
-                                    <div class="form-group">
-                                        <input type="email" name="email" id="email" class="form-control" required data-error="Por favor introduzca su correo electrónico" placeholder="Tu correo electrónico">
-                                        <div class="help-block with-errors"></div>
-                                    </div>
-                                </div>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('contactForm').addEventListener('submit', function(e){
+        e.preventDefault();
 
-                                <div class="col-lg-6 col-sm-6">
-                                    <div class="form-group">
-                                        <input type="text" name="phone_number" id="phone_number" required data-error="Por favor ingresa tu número" class="form-control" placeholder="Su teléfono">
-                                        <div class="help-block with-errors"></div>
-                                    </div>
-                                </div>
+        // Limpiar mensajes y clases
+        let fields = [
+            {id: 'name', error: 'nameError'},
+            {id: 'email', error: 'emailError'},
+            {id: 'phone_number', error: 'phoneError'},
+            {id: 'msg_subject', error: 'subjectError'},
+            {id: 'message', error: 'messageError'}
+        ];
+        fields.forEach(f => {
+            document.getElementById(f.id).classList.remove('is-invalid');
+            document.getElementById(f.error).textContent = '';
+        });
 
-                                <div class="col-lg-6 col-sm-6">
-                                    <div class="form-group">
-                                        <input type="text" name="msg_subject" id="msg_subject" class="form-control" required data-error="Por favor ingresa tu asunto" placeholder="Tu asunto">
-                                        <div class="help-block with-errors"></div>
-                                    </div>
-                                </div>
+        // Obtener valores y limpiar espacios
+        var nombre = document.getElementById('name').value.trim();
+        var email = document.getElementById('email').value.trim();
+        var telefono = document.getElementById('phone_number').value.trim();
+        var asunto = document.getElementById('msg_subject').value.trim();
+        var mensaje = document.getElementById('message').value.trim();
 
-                                <div class="col-lg-12 col-md-12">
-                                    <div class="form-group">
-                                        <textarea name="message" class="form-control textarea-hight" id="message" cols="30" rows="4" required data-error="Escribe tu mensaje" placeholder="Tu mensaje"></textarea>
-                                        <div class="help-block with-errors"></div>
-                                    </div>
-                                </div>
+        var valid = true;
 
-                                <div class="col-lg-12 col-md-12">
-                                    <button type="submit" class="default-btn btn-two">
-                                        Enviar Mensaje
-                                        <i class="flaticon-right"></i>
-                                    </button>
-                                    <div id="msgSubmit" class="h3 text-center hidden"></div>
-                                    <div class="clearfix"></div>
-                                </div>
-                            </div>
-                        </form>
+        // Validar nombre
+        if (!nombre) {
+            document.getElementById('name').classList.add('is-invalid');
+            document.getElementById('nameError').textContent = 'Debes rellenar este campo';
+            valid = false;
+        }
+
+        // Validar email tipo gmail
+        var gmailRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
+        if (!email) {
+            document.getElementById('email').classList.add('is-invalid');
+            document.getElementById('emailError').textContent = 'Debes rellenar este campo';
+            valid = false;
+        } else if (!gmailRegex.test(email)) {
+            document.getElementById('email').classList.add('is-invalid');
+            document.getElementById('emailError').textContent = 'Debes ingresar un correo tipo @gmail.com';
+            valid = false;
+        }
+
+        // Validar teléfono
+        var phoneRegex = /^[0-9]{10}$/;
+        if (!telefono) {
+            document.getElementById('phone_number').classList.add('is-invalid');
+            document.getElementById('phoneError').textContent = 'Debes rellenar este campo';
+            valid = false;
+        } else if (!phoneRegex.test(telefono)) {
+            document.getElementById('phone_number').classList.add('is-invalid');
+            document.getElementById('phoneError').textContent = 'Debes ingresar un número de 10 dígitos';
+            valid = false;
+        }
+
+        // Validar asunto
+        if (!asunto) {
+            document.getElementById('msg_subject').classList.add('is-invalid');
+            document.getElementById('subjectError').textContent = 'Debes rellenar este campo';
+            valid = false;
+        }
+
+        // Validar mensaje
+        if (!mensaje) {
+            document.getElementById('message').classList.add('is-invalid');
+            document.getElementById('messageError').textContent = 'Debes rellenar este campo';
+            valid = false;
+        }
+
+        // Si todo está válido, abrir WhatsApp con datos
+        if (valid) {
+            var numero = '573104204487'; // WhatsApp Colombia
+            var texto = 
+                "Nombre: " + nombre + "\n" +
+                "Email: " + email + "\n" +
+                "Teléfono: " + telefono + "\n" +
+                "Asunto: " + asunto + "\n" +
+                "Mensaje: " + mensaje;
+            window.open("https://wa.me/" + numero + "?text=" + encodeURIComponent(texto), "_blank");
+        }
+    });
+});
+</script>
                     </div>
                 </div>
             </div>
@@ -92,7 +173,7 @@ include_once 'views/template/portada.php'; ?>
                         <div class="single-contact-info">
                             <i class="bx bx-phone-call"></i>
                             <h3>Teléfono:</h3>
-                            <a href="tel:+(123)1800-567-8990">Tel. + <?php echo $data['empresa']['telefono']; ?></a>
+                            <a href="">Tel. + <?php echo $data['empresa']['telefono']; ?></a>
                         </div>
                     </div>
                     <div class="col-lg-6 col-sm-6">
@@ -111,7 +192,7 @@ include_once 'views/template/portada.php'; ?>
 
 <!-- Start Map Area -->
 <div class="map-area">
-    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d211668.59876652985!2d-77.79004876126386!3d-9.673292878014635!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x91a8e56a53771bdf%3A0xe2db08477d5741e5!2sHuari!5e0!3m2!1ses-419!2spe!4v1711039770175!5m2!1ses-419!2spe" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3976.713372862167!2d-75.5783081!3d4.645127700000001!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e388c338d843183%3A0x96120060502385ea!2sEl%20Rancho%20de%20Salento!5e0!3m2!1ses!2sco!4v1756497343047!5m2!1ses!2sco" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
 </div>
 <!-- End Map Area -->
 

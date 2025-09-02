@@ -86,11 +86,6 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="<?php echo RUTA_PRINCIPAL . 'servicio'; ?>" class="nav-link">
-                                        Servicios
-                                    </a>
-                                </li>
-                                <li class="nav-item">
                                     <a href="<?php echo RUTA_PRINCIPAL . 'contacto'; ?>" class="nav-link">
                                         Contactos
                                     </a>

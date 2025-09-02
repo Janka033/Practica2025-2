@@ -10,9 +10,9 @@ define('CHARSET', 'charset=utf8');
 define('TITLE', 'Hostal Ciudad de Segorbe');
 //PAYPAL
 define('MONEDA_PAYPAL', 'USD');
-define('CLIENTE_ID', 'AVbRvsbD3kOcKnAlfkUuMdbV1XwEmAFFjaEczcSgpNIo_2PubWEwzgMNHwcP_OdS7r01LDCjF2Xkp2eh');
+define('CLIENTE_ID', 'Aa1MwZEuuH0Xq1-4GcIbhygExYtlj-tgiWBgkkvU4TwQPe_b665OxFgyGFDo7F3XMjQYTgM9Y7IBZfqA');
 //MERCADO PAGO
-define('MONEDA_MP', 'USD');
+define('MONEDA_MP', 'COL');
 define('PUBLIC_KEY', 'TEST-ca7038d4-52cd-42f0-a38c-70b78a23fa62');
 define('ACCESS_TOKEN', 'TEST-8559108374203003-082908-25b8496fcdc957de83c4dc1334a88a68-2652635947');
 //SMTP
