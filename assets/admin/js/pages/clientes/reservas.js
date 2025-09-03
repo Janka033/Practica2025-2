@@ -15,17 +15,6 @@ document.addEventListener("DOMContentLoaded", function () {
       { data: "fecha_salida" },
       { data: "monto" },
       { data: "estilo" },
-      { data: "metodo" },
-      {
-        data: null,
-        render: function (data, type, row) {
-          return (
-            '<button class="btn btn-danger btn-generar-ticket btn-sm" data-id="' +
-            row.id +
-            '">Ticket</button>'
-          );
-        },
-      },
     ],
     language: {
       url: "//cdn.datatables.net/plug-ins/1.13.7/i18n/es-ES.json",

@@ -28,19 +28,6 @@
         </div>
     </div>
     <div class="col">
-        <div class="card radius-10 bg-gradient-ohhappiness">
-            <div class="card-body">
-                <div class="d-flex align-items-center">
-                    <div class="me-auto">
-                        <p class="mb-0 text-white fw-bold">Total de Categorias</p>
-                        <h4 class="my-1 text-white"><?php echo $data['totales']['categorias']['total']; ?></h4>
-                    </div>
-                    <div id="chart3"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col">
         <div class="card radius-10 bg-gradient-kyoto">
             <div class="card-body">
                 <div class="d-flex align-items-center">
@@ -89,10 +76,8 @@
                         <th scope="col">#</th>
                         <th scope="col">Fecha Llegada</th>
                         <th scope="col">Fecha Salida</th>
-                        <th scope="col">Monto</th>
+                        <th scope="col">Total</th>
                         <th scope="col">Habitación</th>
-                        <th scope="col">Método</th>
-                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -106,12 +91,6 @@
 <div class="modal fade" id="modalTicket" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="modalTitleId">
-                    Ticket
-                </h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
             <div class="modal-body">
                 <iframe frameborder="0" id="content-ticket" style="width: 100%;" height="400px"></iframe>
             </div>
