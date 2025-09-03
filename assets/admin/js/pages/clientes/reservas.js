@@ -12,11 +12,12 @@ document.addEventListener("DOMContentLoaded", function () {
       { data: "fecha_ingreso" },
       { data: "fecha_salida" },
       { data: "monto" },
-      { data: "estilo" },
+      { data: "estilo" }
+      // Elimina { data: "metodo" } y cualquier columna con "ticket"
     ],
     language: {
-  url: "/assets/admin/i18n/es-ES.json"
-},
+      url: "/assets/admin/i18n/es-ES.json", // Usa el idioma local que ya tienes
+    },
     initComplete: function() {
       var table = this.api();
       table.on('dblclick', 'tr', function() {

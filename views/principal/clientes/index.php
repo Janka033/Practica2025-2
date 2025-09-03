@@ -91,8 +91,6 @@
                         <th scope="col">Fecha Salida</th>
                         <th scope="col">Monto</th>
                         <th scope="col">Habitación</th>
-                        <th scope="col">Método</th>
-                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -103,7 +101,7 @@
     </div>
 </div>
 
-<div class="modal fade" id="modalTicket" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
+<div class="" id="" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
 </div>
 
 <?php include_once 'views/template/footer-cliente.php'; ?>
