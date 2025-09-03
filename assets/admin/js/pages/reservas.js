@@ -19,21 +19,13 @@ document.addEventListener("DOMContentLoaded", function () {
       { data: "fecha_ingreso" },
       { data: "fecha_salida" },
       { data: "cliente" },
-      { data: "metodo" },
       {
         data: null,
-        render: function (data, type, row) {
-          return (
-            '<button class="btn btn-danger btn-generar-ticket btn-sm" data-id="' +
-            row.id +
-            '">Ticket</button>'
-          );
-        },
       },
     ],
     language: {
-      url: "//cdn.datatables.net/plug-ins/2.0.2/i18n/es-ES.json",
-    },
+  url: "/assets/admin/i18n/es-ES.json"
+},
     responsive: true,
     order: [[0, "desc"]],
     dom: "Pfrtip", // Agregar los botones de SearchPanes
@@ -83,19 +75,4 @@ document.addEventListener("DOMContentLoaded", function () {
     },
   });
 
-  // Agregar evento al botón para generar reporte por fila
-  document
-    .getElementById("tblReservas")
-    .addEventListener("click", function (event) {
-      var target = event.target;
-      if (target.classList.contains("btn-generar-ticket")) {
-        var id = target.getAttribute("data-id");
-        generarReporte(id);
-      }
-    });
 });
-
-function generarReporte(id) {
-  contentTicket.src = ruta_principal + "dashboard/ticket/" + id;
-  myModal.show();
-}

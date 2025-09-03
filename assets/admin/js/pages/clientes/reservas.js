@@ -15,8 +15,8 @@ document.addEventListener("DOMContentLoaded", function () {
       { data: "estilo" },
     ],
     language: {
-      url: "//cdn.datatables.net/plug-ins/1.13.7/i18n/es-ES.json",
-    },
+  url: "/assets/admin/i18n/es-ES.json"
+},
     initComplete: function() {
       var table = this.api();
       table.on('dblclick', 'tr', function() {
@@ -26,17 +26,4 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     }
   });
-
-  // ---- ELIMINADO: Evento para generar ticket, ya no es necesario ----
-  /*
-  document
-    .getElementById("tblReservas")
-    .addEventListener("click", function (event) {
-      var target = event.target;
-      if (target.classList.contains("btn-generar-ticket")) {
-        var id = target.getAttribute("data-id");
-        generarReporte(id);
-      }
-    });
-  */
 });
