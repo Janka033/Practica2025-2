@@ -1,5 +1,3 @@
-const myModal = new bootstrap.Modal(document.getElementById("modalTicket"));
-const contentTicket = document.querySelector("#content-ticket");
 var tablaReservas;
 document.addEventListener("DOMContentLoaded", function () {
   tablaReservas = new DataTable("#tblReservas", {
@@ -20,18 +18,17 @@ document.addEventListener("DOMContentLoaded", function () {
       url: "//cdn.datatables.net/plug-ins/1.13.7/i18n/es-ES.json",
     },
     initComplete: function() {
-
       var table = this.api();
-
       table.on('dblclick', 'tr', function() {
           var data = table.row(this).data();
           var id = data.id;
           window.location = base_url + 'dashboard/calificacion/' + id;
       });
-  }
+    }
   });
 
-  // Agregar evento al botón para generar reporte por fila
+  // ---- ELIMINADO: Evento para generar ticket, ya no es necesario ----
+  /*
   document
     .getElementById("tblReservas")
     .addEventListener("click", function (event) {
@@ -41,9 +38,5 @@ document.addEventListener("DOMContentLoaded", function () {
         generarReporte(id);
       }
     });
+  */
 });
-
-function generarReporte(id) {
-  contentTicket.src = base_url + "dashboard/ticket/" + id;
-  myModal.show();
-}

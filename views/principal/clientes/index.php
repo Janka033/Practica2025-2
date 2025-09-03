@@ -88,20 +88,6 @@
     </div>
 </div>
 
-<div class="modal fade" id="modalTicket" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-body">
-                <iframe frameborder="0" id="content-ticket" style="width: 100%;" height="400px"></iframe>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
-                    Close
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
 
 <?php include_once 'views/template/footer-cliente.php'; ?>
 
