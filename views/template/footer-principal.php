@@ -16,11 +16,6 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="<?php echo $data['empresa']['twitter']; ?>">
-                                    <i class="bx bxl-twitter"></i>
-                                </a>
-                            </li>
-                            <li>
                                 <a href="<?php echo $data['empresa']['whatsapp']; ?>">
                                     <i class="bx bxl-whatsapp"></i>
                                 </a>

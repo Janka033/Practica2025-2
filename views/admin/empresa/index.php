@@ -61,14 +61,6 @@
                 </div>
 
                 <div class="col-lg-4 col-sm-6 mb-2">
-                    <label>Url Twitter</label>
-                    <div class="input-group">
-                        <span class="input-group-text"><i class="fab fa-twitter"></i></span>
-                        <input type="url" id="twitter" name="twitter" class="form-control" value="<?php echo $data['empresa']['twitter']; ?>" placeholder="Twitter">
-                    </div>
-                </div>
-
-                <div class="col-lg-4 col-sm-6 mb-2">
                     <label>Url Whatsapp</label>
                     <div class="input-group">
                         <span class="input-group-text"><i class="fab fa-whatsapp-square"></i></span>

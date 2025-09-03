@@ -32,20 +32,6 @@
         </div>
     </div>
     <div class="col">
-        <div class="card radius-10 bg-gradient-ohhappiness">
-            <div class="card-body">
-                <div class="d-flex align-items-center">
-                    <div class="me-auto">
-                        <p class="mb-0 text-white fw-bold">Total de Categorias</p>
-                        <h4 class="my-1 text-white"><?php echo $data['totales']['categorias']['total']; ?></h4>
-                        <a class="mb-0 font-13 text-white" href="<?php echo RUTA_ADMIN . 'categorias'; ?>">VER DETALLE</a>
-                    </div>
-                    <div id="chart3"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col">
         <div class="card radius-10 bg-gradient-kyoto">
             <div class="card-body">
                 <div class="d-flex align-items-center">

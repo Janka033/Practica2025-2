@@ -82,13 +82,6 @@ if ($_SESSION['rol'] == 3) {
                     </ul>
                 </li>
                 <li>
-                    <a href="<?= RUTA_ADMIN . 'categorias'; ?>">
-                        <div class="parent-icon"><i class='fas fa-tags'></i>
-                        </div>
-                        <div class="menu-title">Categorias</div>
-                    </a>
-                </li>
-                <li>
                     <a href="<?= RUTA_ADMIN . 'habitaciones'; ?>">
                         <div class="parent-icon"><i class="fa-solid fa-hotel"></i>
                         </div>
