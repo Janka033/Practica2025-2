@@ -11,28 +11,24 @@ document.addEventListener("DOMContentLoaded", function () {
     },
     columns: [
       { data: "id" },
-      { data: "estilo" },
+      { data: "estilo" }, // el nombre de la habitación, NO el id
       { data: "numero" },
       { data: "fecha_reserva" },
       { data: "monto" },
-      { data: "cod_reserva" },
       { data: "fecha_ingreso" },
       { data: "fecha_salida" },
       { data: "cliente" },
-      {
-        data: null,
-      },
     ],
     language: {
-  url: "/assets/admin/i18n/es-ES.json"
-},
+      url: "/assets/admin/i18n/es-ES.json",
+    },
     responsive: true,
     order: [[0, "desc"]],
     dom: "Pfrtip", // Agregar los botones de SearchPanes
     searchPanes: {
       cascadePanes: true,
       viewTotal: true,
-      columns: [1, 9]
+      columns: [1, 7],
     },
     initComplete: function () {
       var counts = {};
@@ -74,5 +70,4 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     },
   });
-
 });

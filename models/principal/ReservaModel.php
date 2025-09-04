@@ -29,15 +29,11 @@ class ReservaModel extends Query{
     }
 
     //AGREGAR RESERVA
-    public function agregarReserva($monto, $num_transaccion, $cod_reserva,
-    $fecha_ingreso, $fecha_salida, $descripcion,
-    $metodo, $id_habitacion, $id_usuario) {
-        $sql = "INSERT INTO reservas (monto, num_transaccion, cod_reserva,
-        fecha_ingreso, fecha_salida, descripcion,
-        metodo, id_habitacion, id_usuario) VALUES (?,?,?,?,?,?,?,?,?)";
-        return $this->insert($sql, [$monto, $num_transaccion, $cod_reserva,
-        $fecha_ingreso, $fecha_salida, $descripcion,
-        $metodo, $id_habitacion, $id_usuario]);
+    public function agregarReserva($monto,
+    $fecha_ingreso, $fecha_salida, $descripcion, $id_habitacion, $id_usuario) {
+        $sql = "INSERT INTO reservas (monto,
+        fecha_ingreso, fecha_salida, descripcion, id_habitacion, id_usuario) VALUES (?,?,?,?,?,?)";
+        return $this->insert($sql, [$monto, $fecha_ingreso, $fecha_salida, $descripcion, $id_habitacion, $id_usuario]);
     }
 
     public function listarReservas($id_usuario) {
