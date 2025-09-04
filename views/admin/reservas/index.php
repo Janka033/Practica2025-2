@@ -16,11 +16,9 @@
                         <th><i class="fa-solid fa-hashtag"></i> N°</th>
                         <th><i class="fa-solid fa-calendar-days"></i> Fecha/Hora</th>
                         <th><i class="fa-solid fa-dollar-sign"></i> Monto</th>
-                        <th><i class="fa-solid fa-code"></i> Cod. reserva</th>
                         <th><i class="fa-solid fa-calendar-days"></i> F. Ingreso</th>
                         <th><i class="fa-solid fa-calendar-days"></i> F. Salida</th>
                         <th><i class="fa-solid fa-users"></i> Cliente</th>
-                        <th><i class="fa-regular fa-credit-card"></i> Metodo</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -43,11 +41,6 @@
             </div>
             <div class="modal-body">
                 <iframe frameborder="0" id="content-ticket" style="width: 100%;" height="400px"></iframe>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
-                    Close
-                </button>
             </div>
         </div>
     </div>

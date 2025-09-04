@@ -94,11 +94,9 @@
                         <th><i class="fa-solid fa-hashtag"></i> N°</th>
                         <th><i class="fa-solid fa-calendar-days"></i> Fecha/Hora</th>
                         <th><i class="fa-solid fa-dollar-sign"></i> Monto</th>
-                        <th><i class="fa-solid fa-code"></i> Cod. reserva</th>
                         <th><i class="fa-solid fa-calendar-days"></i> F. Ingreso</th>
                         <th><i class="fa-solid fa-calendar-days"></i> F. Salida</th>
                         <th><i class="fa-solid fa-users"></i> Cliente</th>
-                        <th><i class="fa-regular fa-credit-card"></i> Metodo</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -111,12 +109,9 @@
                         <td><?php echo $reserva['fecha_reserva']; ?></td>
                         <td><span class="badge bg-gradient-quepal text-white shadow-sm w-100"><?php echo $reserva['monto']; ?></span>
                         </td>
-                        <td><?php echo $reserva['cod_reserva']; ?></td>
                         <td><?php echo $reserva['fecha_ingreso']; ?></td>
                         <td><?php echo $reserva['fecha_salida']; ?></td>
-                        <td><?php echo $reserva['cliente']; ?></td>
-                        <td><?php echo $reserva['metodo']; ?></td>
-                      
+                        <td><?php echo $reserva['cliente']; ?></td>                      
                     </tr>
                     <?php } ?>
                 </tbody>

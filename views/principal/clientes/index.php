@@ -27,19 +27,6 @@
             </div>
         </div>
     </div>
-    <div class="col">
-        <div class="card radius-10 bg-gradient-kyoto">
-            <div class="card-body">
-                <div class="d-flex align-items-center">
-                    <div class="me-auto">
-                        <p class="mb-0 text-white fw-bold">Total Clientes</p>
-                        <h4 class="my-1 text-white"><?php echo $data['totales']['clientes']['total']; ?></h4>
-                    </div>
-                    <div id="chart4"></div>
-                </div>
-            </div>
-        </div>
-    </div>
 </div>
 
 <div class="card">
