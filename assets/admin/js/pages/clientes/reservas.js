@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function () {
       // Elimina { data: "metodo" } y cualquier columna con "ticket"
     ],
     language: {
-      url: "/assets/admin/i18n/es-ES.json", // Usa el idioma local que ya tienes
+      url: "/reservas/assets/admin/i18n/es-ES.json", // Usa el idioma local que ya tienes
     },
     initComplete: function() {
       var table = this.api();

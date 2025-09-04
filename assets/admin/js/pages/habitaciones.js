@@ -79,7 +79,7 @@ document.addEventListener("DOMContentLoaded", function () {
       },
     ],
     language: {
-      url: "/assets/admin/i18n/es-ES.json",
+      url: "/reservas/assets/admin/i18n/es-ES.json",
     },
     responsive: true,
     order: [[0, "desc"]],
