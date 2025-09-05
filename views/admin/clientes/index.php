@@ -41,8 +41,8 @@
                                 <label for="identidad">Identidad <span class="text-danger">*</span></label>
                                 <select id="identidad" class="form-control" name="identidad">
                                     <option value="">Seleccionar</option>
-                                    <option value="DNI">C.C</option>
-                                    <option value="RUC">RUC</option>
+                                    <option value="C.C">C.C</option>
+                                    <option value="D.E">D.E</option>
                                 </select>
                             </div>
                         </div>
