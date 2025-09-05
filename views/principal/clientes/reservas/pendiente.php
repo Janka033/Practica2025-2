@@ -53,22 +53,69 @@
 
                 </div>
                 
+                <script>
+const btnProcesar = document.getElementById('btnProcesar');
+let bloqueado = false;
 
-<script>
-document.getElementById('btnProcesar').addEventListener('click', async function() {
-  try {
-    const resp = await fetch('<?php echo RUTA_PRINCIPAL; ?>reserva/confirmar', { method: 'POST' });
-    const data = await resp.json();
-    if (data.success) {
-      alert('Reserva confirmada');
-      // redirige al dashboard del cliente
-      window.location.href = '<?php echo RUTA_PRINCIPAL; ?>dashboard';
-    } else {
-      alert('Error: ' + (data.msg || 'No se pudo confirmar'));
+btnProcesar.addEventListener('click', () => {
+  if (bloqueado) return;
+
+  Swal.fire({
+    title: 'Confirmar Reserva?',
+    text: '¿Estas seguro que quieres hacer esta reserva?',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Sí, reservar!',
+    cancelButtonText: 'Cancelar'
+  }).then(result => {
+    if (!result.isConfirmed) {
+      return; // Cancelado
     }
-  } catch (e) {
-    alert('Error de red: ' + e.message);
-  }
+
+    bloqueado = true;
+    btnProcesar.disabled = true;
+    const textoOriginal = btnProcesar.textContent;
+    btnProcesar.textContent = 'Procesando...';
+
+    fetch('<?php echo RUTA_PRINCIPAL; ?>reserva/confirmar', {
+      method: 'POST'
+    })
+      .then(r => r.json())
+      .then(data => {
+        if (data.success) {
+          Swal.fire({
+            title: 'Reserva confirmada',
+            icon: 'success',
+            timer: 1600,
+            showConfirmButton: false
+          });
+
+          // Ajusta la ruta si quieres otra distinta a 'dashboard'
+            // Opción 1 (actual dashboard):
+            // const destino = '<?php echo RUTA_PRINCIPAL; ?>dashboard';
+            // Opción 2 (si tu "perfil" fuera otra ruta, por ejemplo perfil):
+            // const destino = '<?php echo RUTA_PRINCIPAL; ?>perfil';
+
+          const destino = '<?php echo RUTA_PRINCIPAL; ?>dashboard';
+
+          setTimeout(() => {
+            window.location.href = destino;
+          }, 1600);
+        } else {
+          Swal.fire('Error', data.msg || 'No se pudo confirmar', 'error');
+        }
+      })
+      .catch(e => {
+        Swal.fire('Error', 'Error de red: ' + e.message, 'error');
+      })
+      .finally(() => {
+        bloqueado = false;
+        btnProcesar.disabled = false;
+        btnProcesar.textContent = 'Reservar';
+      });
+  });
 });
 </script>
 

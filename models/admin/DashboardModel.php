@@ -70,7 +70,7 @@ class DashboardModel extends Query{
     public function montoReservas($table, $campo1, $campo2, $desde, $hasta, $id_usuario)
     {
         $existe = ($id_usuario > 1) ? " AND id_usuario = $id_usuario" : '';
-        $sql = "SELECT SUM($campo2) AS total FROM $table WHERE $campo1 BETWEEN '$desde' AND '$hasta' AND estado = 1 $existe";
+        $sql = "SELECT SUM($campo2) AS total FROM $table WHERE $campo1 BETWEEN '$desde' AND '$hasta' $existe";
         return $this->select($sql);
     }
 }
