@@ -46,19 +46,31 @@
                         </a>
 
                     </div>
-
-                </div>
-                <div class="col-md-6">
-                    <div class="mb-3">
-                        <label for="descripcion" class="form-label">Notas</label>
-                        <textarea class="form-control" id="descripcion" rows="3" placeholder="Notas"></textarea>
-                    </div>
-
+                    <div class="col-md-6">
                     <button type="button" class="btn btn-primary" id="btnProcesar">
-                        Procesar Pago
+                        Reservar
                     </button>
 
+                </div>
+                
 
+<script>
+document.getElementById('btnProcesar').addEventListener('click', async function() {
+  try {
+    const resp = await fetch('<?php echo RUTA_PRINCIPAL; ?>reserva/confirmar', { method: 'POST' });
+    const data = await resp.json();
+    if (data.success) {
+      alert('Reserva confirmada');
+      // redirige al dashboard del cliente
+      window.location.href = '<?php echo RUTA_PRINCIPAL; ?>dashboard';
+    } else {
+      alert('Error: ' + (data.msg || 'No se pudo confirmar'));
+    }
+  } catch (e) {
+    alert('Error de red: ' + e.message);
+  }
+});
+</script>
 
                 </div>
             </div>
@@ -74,8 +86,6 @@
 
 <?php include_once 'views/template/footer-cliente.php'; ?>
 
-<script src="https://www.paypal.com/sdk/js?client-id=<?php echo CLIENTE_ID; ?>"></script>
-<script src="https://sdk.mercadopago.com/js/v2"></script>
 <script src="https://cdn.ckeditor.com/ckeditor5/41.0.0/classic/ckeditor.js"></script>
 
 </body>

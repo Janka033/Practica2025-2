@@ -130,7 +130,7 @@ include_once 'views/template/header-principal.php'; ?>
                     <div class="single-facilities">
                         <i class="facilities-icon flaticon-podium"></i>
                         <h3>Wifi Gratis</h3>
-                        <p>"Servicio de transporte cómodo y confiable para su conveniencia."</p>
+                        <p>Wi‑Fi de alta velocidad en habitaciones y áreas comunes.</p>
                         
                     </div>
                 </div>
@@ -140,7 +140,7 @@ include_once 'views/template/header-principal.php'; ?>
                     <div class="single-facilities">
                         <i class="facilities-icon flaticon-checked-1"></i>
                         <h3>Habitaciones Familiares​​​​</h3>
-                        <p>"¡Saludos! Disfrute de nuestra bebida de bienvenida mientras se relaja."</p>
+                        <p>Más espacio para estar juntos y descansar mejor.</p>
                         
                     </div>
                 </div>
@@ -150,7 +150,7 @@ include_once 'views/template/header-principal.php'; ?>
                     <div class="single-facilities">
                         <i class="facilities-icon flaticon-coffee-cup"></i>
                         <h3>Buen Desayuno</h3>
-                        <p>"Estacionamiento seguro y conveniente para su vehículo."</p>
+                        <p>Empieza el día con sabor: opciones calientes, saludables y café recién hecho.</p>
                         
                     </div>
                 </div>
@@ -160,7 +160,7 @@ include_once 'views/template/header-principal.php'; ?>
                     <div class="single-facilities">
                         <i class="facilities-icon flaticon-slow"></i>
                         <h3>Habitaciones sin Humo​</h3>
-                        <p>"Refresque su sed con agua fría o caliente disponible en todo momento."</p>
+                        <p>Ambientes libres de humo para un descanso fresco y agradable.</p>
                         
                     </div>
                 </div>

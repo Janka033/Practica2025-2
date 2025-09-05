@@ -2,9 +2,6 @@
 require_once 'vendor/autoload.php';
 // SDK de Mercado Pago
 
-use MercadoPago\Client\Preference\PreferenceClient;
-use MercadoPago\MercadoPagoConfig;
-
 class Reserva extends Controller
 {
     public function __construct()
@@ -99,9 +96,6 @@ class Reserva extends Controller
         if (!empty($_SESSION['reserva'])) {
             $data['habitacion'] = $this->model->getHabitacion($_SESSION['reserva']['habitacion']);
         }
-        //MERCADO PAGO
-        MercadoPagoConfig::setAccessToken(ACCESS_TOKEN);
-        $client = new PreferenceClient();
 
         $back_urls = array(
             "success" => RUTA_PRINCIPAL . 'reserva/success',
@@ -117,18 +111,7 @@ class Reserva extends Controller
 
         $precio = floatval($data['habitacion']['precio']);
 
-        $preference = $client->create([
-            "items" => [
-                [
-                    "title" => $data['habitacion']['estilo'],
-                    "quantity" => $cantidad->d + 1,
-                    'currency_id' => MONEDA_MP,
-                    "unit_price" => $precio
-                ]
-            ],
-            'back_urls' => $back_urls
-        ]);
-        $data['preference_id'] = $preference->id;
+        
         $data['total'] = ($cantidad->d + 1) * $precio;
         $this->views->getView('principal/clientes/reservas/pendiente', $data);
     }
@@ -154,12 +137,9 @@ class Reserva extends Controller
         $descripcion = $_SESSION['notas'];
         $reserva = [
             'monto' => $habitacion['precio'] * ($cantidad->d + 1),
-            'num_transaccion' => $_GET['payment_id'],
-            'cod_reserva' => uniqid(),
             'fecha_ingreso' => $_SESSION['reserva']['f_llegada'],
             'fecha_salida' => $_SESSION['reserva']['f_salida'],
             'descripcion' => $descripcion,
-            'metodo' => 'Mercado Pago',
             'id_habitacion' => $_SESSION['reserva']['habitacion'],
             'id_usuario' => $_SESSION['id_usuario']
         ];
@@ -186,12 +166,9 @@ class Reserva extends Controller
         $descripcion = $_SESSION['notas'];
         $reserva = [
             'monto' => $array['reserva']['purchase_units'][0]['amount']['value'],
-            'num_transaccion' => $array['reserva']['id'],
-            'cod_reserva' => uniqid(),
             'fecha_ingreso' => $_SESSION['reserva']['f_llegada'],
             'fecha_salida' => $_SESSION['reserva']['f_salida'],
             'descripcion' => $descripcion,
-            'metodo' => 'Paypal',
             'id_habitacion' => $_SESSION['reserva']['habitacion'],
             'id_usuario' => $_SESSION['id_usuario']
         ];
@@ -205,17 +182,16 @@ class Reserva extends Controller
         echo json_encode($res);
         die();
     }
+    
+
 
     private function agregarReserva($reserva)
     {
         return $this->model->agregarReserva(
             $reserva['monto'],
-            $reserva['num_transaccion'],
-            $reserva['cod_reserva'],
             $reserva['fecha_ingreso'],
             $reserva['fecha_salida'],
             $reserva['descripcion'],
-            $reserva['metodo'],
             $reserva['id_habitacion'],
             $reserva['id_usuario']
         );
@@ -229,4 +205,60 @@ class Reserva extends Controller
             header('Location: ' . RUTA_PRINCIPAL . 'dashboard');
         }
     }
+
+    // NUEVO: confirmar la reserva
+    public function confirmar()
+    {
+        header('Content-Type: application/json');
+        if (empty($_SESSION['id_usuario'])) {
+            echo json_encode(['success' => false, 'msg' => 'Sesión expirada']);
+            die();
+        }
+        if (empty($_SESSION['reserva'])) {
+            echo json_encode(['success' => false, 'msg' => 'No hay reserva pendiente']);
+            die();
+        }
+
+        $f_llegada   = $_SESSION['reserva']['f_llegada'];
+        $f_salida    = $_SESSION['reserva']['f_salida'];
+        $id_habitacion = (int) $_SESSION['reserva']['habitacion'];
+        $id_usuario  = (int) $_SESSION['id_usuario'];
+
+        // obtener precio de la habitación
+        $hab = $this->model->getHabitacion($id_habitacion);
+        if (empty($hab)) {
+            echo json_encode(['success' => false, 'msg' => 'Habitación no encontrada']);
+            die();
+        }
+
+        // calcular noches (mínimo 1)
+        try {
+            $ini  = new DateTime($f_llegada);
+            $fin  = new DateTime($f_salida);
+            $dias = (int) $ini->diff($fin)->days;
+            if ($dias < 1) { $dias = 1; }
+        } catch (Throwable $e) {
+            echo json_encode(['success' => false, 'msg' => 'Fechas inválidas']);
+            die();
+        }
+
+        $precio = (float) $hab['precio'];
+        $monto  = $dias * $precio;
+        $desc   = 'Reserva del ' . $f_llegada . ' al ' . $f_salida;
+
+        // insertar la reserva
+        $id_reserva = $this->model->agregarReserva($monto, $f_llegada, $f_salida, $desc, $id_habitacion, $id_usuario);
+
+        if ($id_reserva > 0) {
+            // estado 2 = confirmada (ajústalo si manejas otros códigos)
+            $ok = $this->model->actualizarEstadoReserva(2, $id_reserva, $id_usuario);
+            unset($_SESSION['reserva']); // limpiar la reserva temporal en sesión
+            echo json_encode(['success' => $ok == 1, 'id' => $id_reserva]);
+        } else {
+            echo json_encode(['success' => false, 'msg' => 'No se pudo registrar la reserva']);
+        }
+        die();
+    }
+
+    
 }

@@ -39,5 +39,11 @@ class ReservaModel extends Query{
     public function listarReservas($id_usuario) {
         return $this->selectAll("SELECT r.*, h.estilo FROM reservas r INNER JOIN habitaciones h ON r.id_habitacion = h.id WHERE r.id_usuario = $id_usuario");
     }
+    
+    // NUEVO: actualizar estado de una reserva del usuario
+    public function actualizarEstadoReserva($estado, $id_reserva, $id_usuario) {
+        $sql = "UPDATE reservas SET estado = ? WHERE id = ? AND id_usuario = ?";
+        return $this->save($sql, [$estado, $id_reserva, $id_usuario]);
+    }
 }
 ?>
