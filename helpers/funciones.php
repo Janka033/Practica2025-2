@@ -318,4 +318,33 @@ function verificar($valor, $datos = [])
   $existe = array_search($valor, $datos, true);
   return is_numeric($existe);
 }
+
+use Carbon\Carbon;
+
+if (!function_exists('fechaLocalYRelativa')) {
+    /**
+     * Convierte una fecha (asumida en UTC salvo que se indique) a:
+     * - formato absoluto en la zona indicada
+     * - texto relativo en español
+     *
+     * @param string $fechaRaw  Datetime (Y-m-d H:i:s)
+     * @param string $zonaOrigen  (default 'UTC')
+     * @param string $zonaDestino (default 'America/Bogota')
+     * @param string $formato     (default 'Y-m-d H:i:s')
+     * @return array ['absoluta' => string, 'relativa' => string]
+     */
+    function fechaLocalYRelativa(
+        string $fechaRaw,
+        string $zonaOrigen = 'UTC',
+        string $zonaDestino = 'America/Bogota',
+        string $formato = 'Y-m-d H:i:s'
+    ): array {
+        Carbon::setLocale('es');
+        $c = Carbon::parse($fechaRaw, $zonaOrigen)->setTimezone($zonaDestino);
+        return [
+            'absoluta' => $c->format($formato),
+            'relativa' => $c->diffForHumans()
+        ];
+    }
+}
 ?>

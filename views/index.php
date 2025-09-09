@@ -257,6 +257,10 @@ include_once 'views/template/header-principal.php'; ?>
                         <h4><?php echo $testimonial['fecha']; ?></h4>
                         <span><?php echo $testimonial['correo']; ?></span>
                     </div>
+                    <pre style="color:#c00">
+RAW: <?= htmlspecialchars($testimonial['fecha']) ?>
+PHP now: <?= date('Y-m-d H:i:s') ?>
+</pre>
                 </div>
             <?php } ?>
         </div>
