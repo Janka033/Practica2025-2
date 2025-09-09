@@ -99,9 +99,9 @@
                             </ul>
                             <!-- Start Other Option -->
                             <div class="others-option">
-                                <a class="call-us" href="tel:+009-8765-4332">
+                                <a class="call-us" href="https://wa.me/573104204487">
                                     <i class="bx bx-phone-call bx-tada"></i>
-                                    +<?php echo $data['empresa']['telefono']; ?>
+                                    <?php echo $data['empresa']['telefono']; ?>
                                 </a>
                             </div>
                             <!-- End Other Option -->

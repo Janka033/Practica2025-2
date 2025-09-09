@@ -236,57 +236,67 @@ class Reserva extends Controller
 
     // NUEVO: confirmar la reserva
     public function confirmar()
-    {
-        header('Content-Type: application/json');
-        if (empty($_SESSION['id_usuario'])) {
-            echo json_encode(['success' => false, 'msg' => 'Sesión expirada']);
-            die();
-        }
-        if (empty($_SESSION['reserva'])) {
-            echo json_encode(['success' => false, 'msg' => 'No hay reserva pendiente']);
-            die();
-        }
-
-        $f_llegada   = $_SESSION['reserva']['f_llegada'];
-        $f_salida    = $_SESSION['reserva']['f_salida'];
-        $id_habitacion = (int) $_SESSION['reserva']['habitacion'];
-        $id_usuario  = (int) $_SESSION['id_usuario'];
-
-        // obtener precio de la habitación
-        $hab = $this->model->getHabitacion($id_habitacion);
-        if (empty($hab)) {
-            echo json_encode(['success' => false, 'msg' => 'Habitación no encontrada']);
-            die();
-        }
-
-        // calcular noches (mínimo 1)
-        try {
-            $ini  = new DateTime($f_llegada);
-            $fin  = new DateTime($f_salida);
-            $dias = (int) $ini->diff($fin)->days;
-            if ($dias < 1) { $dias = 1; }
-        } catch (Throwable $e) {
-            echo json_encode(['success' => false, 'msg' => 'Fechas inválidas']);
-            die();
-        }
-
-        $precio = (float) $hab['precio'];
-        $monto  = $dias * $precio;
-        $desc   = 'Reserva del ' . $f_llegada . ' al ' . $f_salida;
-
-        // insertar la reserva
-        $id_reserva = $this->model->agregarReserva($monto, $f_llegada, $f_salida, $desc, $id_habitacion, $id_usuario);
-
-        if ($id_reserva > 0) {
-            // estado 2 = confirmada (ajústalo si manejas otros códigos)
-            $ok = $this->model->actualizarEstadoReserva(2, $id_reserva, $id_usuario);
-            unset($_SESSION['reserva']); // limpiar la reserva temporal en sesión
-            echo json_encode(['success' => $ok == 1, 'id' => $id_reserva]);
-        } else {
-            echo json_encode(['success' => false, 'msg' => 'No se pudo registrar la reserva']);
-        }
+{
+    header('Content-Type: application/json');
+    if (empty($_SESSION['id_usuario'])) {
+        echo json_encode(['type' => 'error', 'msg' => 'Sesión expirada']);
         die();
     }
+    if (empty($_SESSION['reserva'])) {
+        echo json_encode(['type' => 'error', 'msg' => 'No hay reserva pendiente']);
+        die();
+    }
+
+    $f_llegada     = $_SESSION['reserva']['f_llegada'];
+    $f_salida      = $_SESSION['reserva']['f_salida'];
+    $id_habitacion = (int) $_SESSION['reserva']['habitacion'];
+    $id_usuario    = (int) $_SESSION['id_usuario'];
+
+    $hab = $this->model->getHabitacion($id_habitacion);
+    if (empty($hab)) {
+        echo json_encode(['type' => 'error', 'msg' => 'Habitación no encontrada']);
+        die();
+    }
+
+    try {
+        $ini  = new DateTime($f_llegada);
+        $fin  = new DateTime($f_salida);
+        $dias = (int) $ini->diff($fin)->days;
+        if ($dias < 1) { $dias = 1; }
+    } catch (Throwable $e) {
+        echo json_encode(['type' => 'error', 'msg' => 'Fechas inválidas']);
+        die();
+    }
+
+    $precio = (float) $hab['precio'];
+    $monto  = $dias * $precio;
+    $desc   = 'Reserva del ' . $f_llegada . ' al ' . $f_salida;
+
+    $data = $this->agregarReserva([
+        'monto'         => $monto,
+        'fecha_ingreso' => $f_llegada,
+        'fecha_salida'  => $f_salida,
+        'descripcion'   => $desc,
+        'id_habitacion' => $id_habitacion,
+        'id_usuario'    => $id_usuario
+    ]);
+
+    if ($data > 0) {
+        // Limpiar la reserva pendiente de la sesión para que desaparezca el botón
+        unset($_SESSION['reserva']);
+        echo json_encode([
+            'type' => 'success',
+            'msg'  => 'Reserva confirmada',
+            'id'   => $data
+        ]);
+    } else {
+        echo json_encode([
+            'type' => 'error',
+            'msg'  => 'No se pudo confirmar la reserva'
+        ]);
+    }
+    die();
+}
 
     
 }

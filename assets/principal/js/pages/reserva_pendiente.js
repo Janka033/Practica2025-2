@@ -1,10 +1,13 @@
-// Manejo de confirmación y envío de la reserva pendiente
 document.addEventListener('DOMContentLoaded', () => {
-  const btn = document.getElementById('btnConfirmarReserva');
+  // Permite usar cualquiera de los dos IDs (según lo que tengas en la vista)
+  const btn = document.getElementById('btnConfirmarReserva') || document.getElementById('btnProcesar');
   if (!btn) return;
 
-  const urlConfirmar = btn.getAttribute('data-url-confirmar');
-  const urlRedirect  = btn.getAttribute('data-redirect');
+  const urlConfirmar = btn.getAttribute('data-url-confirmar') || (typeof base_url !== 'undefined' ? base_url + 'reserva/confirmar' : '');
+  const urlRedirect  = btn.getAttribute('data-redirect')      || (typeof base_url !== 'undefined' ? base_url + 'dashboard' : '');
+  if (!urlConfirmar || !urlRedirect) {
+    console.warn('Faltan data-url-confirmar o data-redirect en el botón de reserva.');
+  }
 
   let enProceso = false;
   const textoOriginal = btn.textContent;
@@ -12,9 +15,15 @@ document.addEventListener('DOMContentLoaded', () => {
   btn.addEventListener('click', () => {
     if (enProceso) return;
 
+    // Verifica que SweetAlert2 esté presente
+    if (typeof Swal === 'undefined') {
+      alert('No está cargado SweetAlert2. Verifica los scripts.');
+      return;
+    }
+
     Swal.fire({
       title: 'Confirmar Reserva',
-      text: '¿Estás seguro de confirmar esta reserva?',
+      text: '¿Estás seguro que quieres hacer esta reserva?',
       icon: 'question',
       showCancelButton: true,
       confirmButtonText: 'Sí, reservar',
@@ -30,24 +39,17 @@ document.addEventListener('DOMContentLoaded', () => {
       fetch(urlConfirmar, {
         method: 'POST',
         headers: {
-          // Si implementas CSRF, agrega aquí: 'X-CSRF-TOKEN': token
           'Accept': 'application/json, text/plain, */*'
+          // Agrega cabecera CSRF si tu backend la requiere
         }
       })
-        .then(async resp => {
-          // Intentar JSON primero
-            let data;
-            const text = await resp.text();
-            try {
-              data = JSON.parse(text);
-            } catch (_) {
-              // Si backend devuelve texto simple tipo "ok"
-              data = { raw: text };
-            }
-            return { ok: resp.ok, data };
+        .then(async r => {
+          const raw = await r.text();
+          let data;
+            try { data = JSON.parse(raw); } catch { data = { raw }; }
+          return { ok: r.ok, data };
         })
         .then(({ ok, data }) => {
-          // Interpretación flexible
           const exito =
             (ok && data.type === 'success') ||
             (typeof data.raw === 'string' && data.raw.trim().toLowerCase() === 'ok');
@@ -56,7 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
             Swal.fire({
               icon: 'success',
               title: 'Reserva confirmada',
-              text: 'Redirigiendo a tu panel...',
+              text: 'Redirigiendo...',
               timer: 1400,
               showConfirmButton: false
             }).then(() => {

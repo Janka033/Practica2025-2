@@ -48,7 +48,12 @@
                         </a>
                     </div>
 
-                    <button type="button" class="btn btn-primary w-100 mb-3" id="btnProcesar">
+                    <button
+                        type="button"
+                        class="btn btn-primary w-100 mb-3"
+                        id="btnConfirmarReserva"
+                        data-url-confirmar="<?php echo RUTA_PRINCIPAL; ?>reserva/confirmar"
+                        data-redirect="<?php echo RUTA_PRINCIPAL; ?>dashboard">
                         Reservar
                     </button>
                 </div>
@@ -64,8 +69,7 @@
                                         src="<?php echo RUTA_PRINCIPAL . $data['galeria'][0]['path']; ?>"
                                         class="img-fluid rounded rg-main-img"
                                         alt="Imagen habitación"
-                                        data-index="0"
-                                    >
+                                        data-index="0">
                                     <button class="rg-nav rg-prev btn btn-light rounded-circle shadow" type="button" aria-label="Anterior">
                                         <i class="bx bx-chevron-left"></i>
                                     </button>
@@ -82,8 +86,7 @@
                                                 data-full="<?php echo RUTA_PRINCIPAL . $img['path']; ?>"
                                                 data-index="<?php echo $i; ?>"
                                                 style="width:95px; height:70px; object-fit:cover; cursor:pointer;"
-                                                alt="thumb <?php echo $i; ?>"
-                                            >
+                                                alt="thumb <?php echo $i; ?>">
                                         </div>
                                     <?php } ?>
                                 </div>
@@ -105,9 +108,9 @@
 
 <!-- JS de la reserva (ya existente) -->
 <script src="<?php echo RUTA_PRINCIPAL . 'assets/principal/js/pages/reserva_pendiente.js'; ?>"></script>
-
 <!-- JS Galería -->
 <script src="<?php echo RUTA_PRINCIPAL . 'assets/principal/js/gallery-room.js'; ?>"></script>
 
 </body>
+
 </html>
