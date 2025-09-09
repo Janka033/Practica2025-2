@@ -218,3 +218,4 @@
 
 <!-- Custom JS -->
 <script src="<?php echo RUTA_PRINCIPAL . 'assets/principal'; ?>/js/custom.js"></script>
+<script src="<?php echo RUTA_PRINCIPAL . 'assets/principal/js/pages/datepicker-rules.js'; ?>"></script>
