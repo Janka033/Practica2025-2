@@ -254,13 +254,8 @@ include_once 'views/template/header-principal.php'; ?>
                     <p>“<?php echo $testimonial['comentario']; ?>”</p>
                     <div class="testimonials-content">
                         <img src="<?php echo RUTA_PRINCIPAL . 'assets/'; ?>/img/user.png" alt="Image">
-                        <h4><?php echo $testimonial['fecha']; ?></h4>
                         <span><?php echo $testimonial['correo']; ?></span>
                     </div>
-                    <pre style="color:#c00">
-RAW: <?= htmlspecialchars($testimonial['fecha']) ?>
-PHP now: <?= date('Y-m-d H:i:s') ?>
-</pre>
                 </div>
             <?php } ?>
         </div>
@@ -280,7 +275,7 @@ if (!empty($_GET['respuesta']) && $_GET['respuesta'] == 'warning') { ?>
 
 <script src="<?php echo RUTA_PRINCIPAL . 'assets/principal/js/pages/disponibilidad.js'; ?>"></script>
 <script src="<?php echo RUTA_PRINCIPAL . 'assets/principal/js/pages/index.js'; ?>"></script>
-<script src="<?php echo RUTA_PRINCIPAL . 'assets/principal/js/pages/datepicker-rules.js'; ?>"></script>
+
 </body>
 
 </html>
