@@ -230,6 +230,7 @@ class Reserva extends Controller
         unset($_SESSION['reserva']);
         if (empty($_SESSION['reserva'])) {
             header('Location: ' . RUTA_PRINCIPAL . 'dashboard');
+            exit;
         }
     }
 

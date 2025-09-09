@@ -96,9 +96,7 @@
                                     (Arrastra imágenes JPG/PNG. Tamaño recomendado aprox. 1200x800. Máx. 10 por subida)
                                 </small>
                             </h5>
-                            <form action="<?php echo RUTA_ADMIN . 'habitaciones/galeriaImagenes'; ?>" class="dropzone dz-inline" id="dzGaleriaInline">
-                                <input type="hidden" id="idHabitacionGaleria" name="idHabitacion">
-                            </form>
+                            <div class="dropzone dz-inline" id="dzGaleriaInline" data-action="<?php echo RUTA_ADMIN . 'habitaciones/galeriaImagenes'; ?>"> <input type="hidden" id="idHabitacionGaleria" name="idHabitacion"> </div>
                             <div class="text-end mt-3">
                                 <button class="btn btn-primary btn-sm" type="button" id="btnSubirGaleria">
                                     Subir Imágenes
@@ -158,7 +156,6 @@
 
 <script src="https://cdn.ckeditor.com/ckeditor5/41.2.1/classic/ckeditor.js"></script>
 <script src="https://unpkg.com/dropzone@6.0.0-beta.1/dist/dropzone-min.js"></script>
-
 <script src="<?php echo RUTA_PRINCIPAL . 'assets/admin/js/pages/habitaciones.js'; ?>"></script>
 
 </body>

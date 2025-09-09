@@ -104,45 +104,7 @@
 <?php include_once 'views/template/footer-cliente.php'; ?>
 
 <!-- JS de la reserva (ya existente) -->
-<script>
-const btnProcesar = document.getElementById('btnProcesar');
-let bloqueado = false;
-
-if (btnProcesar) {
-  btnProcesar.addEventListener('click', () => {
-    if (bloqueado) return;
-    Swal.fire({
-      title: 'Confirmar Reserva?',
-      text: '¿Estas seguro que quieres hacer esta reserva?',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Sí, reservar!',
-      cancelButtonText: 'Cancelar'
-    }).then(result => {
-      if (!result.isConfirmed) {
-        return;
-      }
-      bloqueado = true;
-      btnProcesar.disabled = true;
-      const textoOriginal = btnProcesar.textContent;
-      btnProcesar.textContent = 'Procesando...';
-      fetch('<?php echo RUTA_PRINCIPAL; ?>reserva/confirmar', {
-        method: 'POST'
-      })
-      .then(r => r.text())
-      .then(resp => {
-        window.location.reload();
-      })
-      .catch(() => {
-        btnProcesar.disabled = false;
-        btnProcesar.textContent = textoOriginal;
-      });
-    });
-  });
-}
-</script>
+<script src="<?php echo RUTA_PRINCIPAL . 'assets/principal/js/pages/reserva_pendiente.js'; ?>"></script>
 
 <!-- JS Galería -->
 <script src="<?php echo RUTA_PRINCIPAL . 'assets/principal/js/gallery-room.js'; ?>"></script>
