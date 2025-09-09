@@ -6,16 +6,14 @@
         <?php if (!empty($_SESSION['reserva'])) { ?>
             <div class="alert alert-info alert-dismissible fade show" role="alert">
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-
                 <strong>Aviso!</strong> Tienes una reserva pendiente
             </div>
             <hr>
-            <div class="row">
-                <div class="col-md-6">
-                    <img src="<?php echo RUTA_PRINCIPAL . 'assets/img/habitaciones/' . $data['habitacion']['foto']; ?>" class="img-fluid rounded-top" alt="" />
 
-                    <!-- Hover added -->
-                    <div class="list-group">
+            <div class="row g-4">
+                <!-- Columna Información -->
+                <div class="col-md-6">
+                    <div class="list-group mb-3">
                         <a href="#" class="list-group-item list-group-item-action">
                             <strong>Habitación: </strong>
                             <?php echo $data['habitacion']['estilo']; ?>
@@ -44,97 +42,110 @@
                             <strong>Descripción: </strong>
                             <?php echo $data['habitacion']['descripcion']; ?>
                         </a>
-
+                        <a href="#" class="list-group-item list-group-item-action">
+                            <strong>Total Estimado: </strong>
+                            <?php echo number_format($data['total'], 2); ?>
+                        </a>
                     </div>
-                    <div class="col-md-6">
-                    <button type="button" class="btn btn-primary" id="btnProcesar">
+
+                    <button type="button" class="btn btn-primary w-100 mb-3" id="btnProcesar">
                         Reservar
                     </button>
-
                 </div>
-                
-                <script>
-const btnProcesar = document.getElementById('btnProcesar');
-let bloqueado = false;
 
-btnProcesar.addEventListener('click', () => {
-  if (bloqueado) return;
-
-  Swal.fire({
-    title: 'Confirmar Reserva?',
-    text: '¿Estas seguro que quieres hacer esta reserva?',
-    icon: 'warning',
-    showCancelButton: true,
-    confirmButtonColor: '#3085d6',
-    cancelButtonColor: '#d33',
-    confirmButtonText: 'Sí, reservar!',
-    cancelButtonText: 'Cancelar'
-  }).then(result => {
-    if (!result.isConfirmed) {
-      return; // Cancelado
-    }
-
-    bloqueado = true;
-    btnProcesar.disabled = true;
-    const textoOriginal = btnProcesar.textContent;
-    btnProcesar.textContent = 'Procesando...';
-
-    fetch('<?php echo RUTA_PRINCIPAL; ?>reserva/confirmar', {
-      method: 'POST'
-    })
-      .then(r => r.json())
-      .then(data => {
-        if (data.success) {
-          Swal.fire({
-            title: 'Reserva confirmada',
-            icon: 'success',
-            timer: 1600,
-            showConfirmButton: false
-          });
-
-          // Ajusta la ruta si quieres otra distinta a 'dashboard'
-            // Opción 1 (actual dashboard):
-            // const destino = '<?php echo RUTA_PRINCIPAL; ?>dashboard';
-            // Opción 2 (si tu "perfil" fuera otra ruta, por ejemplo perfil):
-            // const destino = '<?php echo RUTA_PRINCIPAL; ?>perfil';
-
-          const destino = '<?php echo RUTA_PRINCIPAL; ?>dashboard';
-
-          setTimeout(() => {
-            window.location.href = destino;
-          }, 1600);
-        } else {
-          Swal.fire('Error', data.msg || 'No se pudo confirmar', 'error');
-        }
-      })
-      .catch(e => {
-        Swal.fire('Error', 'Error de red: ' + e.message, 'error');
-      })
-      .finally(() => {
-        bloqueado = false;
-        btnProcesar.disabled = false;
-        btnProcesar.textContent = 'Reservar';
-      });
-  });
-});
-</script>
-
+                <!-- Columna Galería -->
+                <div class="col-md-6">
+                    <div class="room-gallery card">
+                        <div class="card-body">
+                            <?php if (!empty($data['galeria'])) { ?>
+                                <div class="rg-main position-relative mb-3">
+                                    <img
+                                        id="rgMainImage"
+                                        src="<?php echo RUTA_PRINCIPAL . $data['galeria'][0]['path']; ?>"
+                                        class="img-fluid rounded rg-main-img"
+                                        alt="Imagen habitación"
+                                        data-index="0"
+                                    >
+                                    <button class="rg-nav rg-prev btn btn-light rounded-circle shadow" type="button" aria-label="Anterior">
+                                        <i class="bx bx-chevron-left"></i>
+                                    </button>
+                                    <button class="rg-nav rg-next btn btn-light rounded-circle shadow" type="button" aria-label="Siguiente">
+                                        <i class="bx bx-chevron-right"></i>
+                                    </button>
+                                </div>
+                                <div class="rg-thumbs d-flex flex-wrap gap-2">
+                                    <?php foreach ($data['galeria'] as $i => $img) { ?>
+                                        <div class="rg-thumb-wrapper">
+                                            <img
+                                                src="<?php echo RUTA_PRINCIPAL . $img['path']; ?>"
+                                                class="rg-thumb img-thumbnail <?php echo $i === 0 ? 'active' : ''; ?>"
+                                                data-full="<?php echo RUTA_PRINCIPAL . $img['path']; ?>"
+                                                data-index="<?php echo $i; ?>"
+                                                style="width:95px; height:70px; object-fit:cover; cursor:pointer;"
+                                                alt="thumb <?php echo $i; ?>"
+                                            >
+                                        </div>
+                                    <?php } ?>
+                                </div>
+                            <?php } else { ?>
+                                <p class="text-muted m-0">No hay imágenes adicionales.</p>
+                            <?php } ?>
+                        </div>
+                    </div>
                 </div>
             </div>
+
         <?php } else { ?>
-            <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-
-                <strong>Aviso!</strong> No tienes ninguna reserva pendiente
-            </div>
+            <p>No hay reserva en curso.</p>
         <?php } ?>
     </div>
 </div>
 
 <?php include_once 'views/template/footer-cliente.php'; ?>
 
-<script src="https://cdn.ckeditor.com/ckeditor5/41.0.0/classic/ckeditor.js"></script>
+<!-- JS de la reserva (ya existente) -->
+<script>
+const btnProcesar = document.getElementById('btnProcesar');
+let bloqueado = false;
+
+if (btnProcesar) {
+  btnProcesar.addEventListener('click', () => {
+    if (bloqueado) return;
+    Swal.fire({
+      title: 'Confirmar Reserva?',
+      text: '¿Estas seguro que quieres hacer esta reserva?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, reservar!',
+      cancelButtonText: 'Cancelar'
+    }).then(result => {
+      if (!result.isConfirmed) {
+        return;
+      }
+      bloqueado = true;
+      btnProcesar.disabled = true;
+      const textoOriginal = btnProcesar.textContent;
+      btnProcesar.textContent = 'Procesando...';
+      fetch('<?php echo RUTA_PRINCIPAL; ?>reserva/confirmar', {
+        method: 'POST'
+      })
+      .then(r => r.text())
+      .then(resp => {
+        window.location.reload();
+      })
+      .catch(() => {
+        btnProcesar.disabled = false;
+        btnProcesar.textContent = textoOriginal;
+      });
+    });
+  });
+}
+</script>
+
+<!-- JS Galería -->
+<script src="<?php echo RUTA_PRINCIPAL . 'assets/principal/js/gallery-room.js'; ?>"></script>
 
 </body>
-
 </html>

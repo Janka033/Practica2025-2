@@ -11,3 +11,41 @@
     width: 250px;
   }
 }
+.room-gallery .rg-main {
+  position: relative;
+  overflow: hidden;
+}
+.room-gallery .rg-main-img {
+  width: 100%;
+  max-height: 360px;
+  object-fit: cover;
+  border-radius: 8px;
+  display: block;
+}
+.room-gallery .rg-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 46px;
+  height: 46px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  background: #ffffffd9;
+}
+.room-gallery .rg-prev { left: 10px; }
+.room-gallery .rg-next { right: 10px; }
+.room-gallery .rg-thumb {
+  transition: transform .2s, box-shadow .2s;
+}
+.room-gallery .rg-thumb.active {
+  outline: 2px solid #0d6efd;
+  transform: scale(1.03);
+  box-shadow: 0 0 0 2px #0d6efd66;
+}
+.room-gallery .rg-thumb:hover {
+  transform: scale(1.05);
+}

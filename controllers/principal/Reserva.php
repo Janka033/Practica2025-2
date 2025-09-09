@@ -88,7 +88,7 @@ class Reserva extends Controller
     public function pendiente()
     {
         if (empty($_SESSION['reserva'])) {
-           redirect(RUTA_PRINCIPAL);
+            redirect(RUTA_PRINCIPAL);
         }
 
         $data['title'] = 'Reserva pendiente';
@@ -97,24 +97,51 @@ class Reserva extends Controller
             $data['habitacion'] = $this->model->getHabitacion($_SESSION['reserva']['habitacion']);
         }
 
-        $back_urls = array(
-            "success" => RUTA_PRINCIPAL . 'reserva/success',
-            "failure" => RUTA_PRINCIPAL . 'reserva/failure',
-            "pending" => RUTA_PRINCIPAL . 'reserva/pending'
-        );
+        // ========== NUEVO: Construir galería ==========
+        $galeria = [];
 
-        //CAPTURAR LA CANTIDAD
+        if (!empty($data['habitacion'])) {
+            // Foto principal
+            if (!empty($data['habitacion']['foto'])) {
+                $galeria[] = [
+                    'path' => 'assets/img/habitaciones/' . $data['habitacion']['foto'],
+                    'principal' => true
+                ];
+            }
+
+            // Carpeta de imágenes adicionales: assets/img/habitaciones/{id}/
+            $folder = 'assets/img/habitaciones/' . $data['habitacion']['id'] . '/';
+            if (is_dir($folder)) {
+                $files = scandir($folder);
+                if ($files !== false) {
+                    foreach ($files as $f) {
+                        if ($f === '.' || $f === '..') {
+                            continue;
+                        }
+                        $ext = strtolower(pathinfo($f, PATHINFO_EXTENSION));
+                        if (in_array($ext, ['jpg', 'jpeg', 'png', 'gif', 'webp'])) {
+                            $galeria[] = [
+                                'path' => $folder . $f,
+                                'principal' => false
+                            ];
+                        }
+                    }
+                }
+            }
+        }
+        $data['galeria'] = $galeria;
+        // ==============================================
+
+        // Cálculo de total
         $fecha1 = new DateTime($_SESSION['reserva']['f_llegada']);
         $fecha2 = new DateTime($_SESSION['reserva']['f_salida']);
-
         $cantidad = $fecha2->diff($fecha1);
-
         $precio = floatval($data['habitacion']['precio']);
-
-        
         $data['total'] = ($cantidad->d + 1) * $precio;
+
         $this->views->getView('principal/clientes/reservas/pendiente', $data);
     }
+
 
     public function agregarNotas()
     {

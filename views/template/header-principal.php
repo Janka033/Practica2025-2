@@ -6,6 +6,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+    <link rel="stylesheet" href="<?php echo RUTA_PRINCIPAL . 'assets/principal/css/custom.css'; ?>">
     <!-- Bootstrap Min CSS -->
     <link rel="stylesheet" href="<?php echo RUTA_PRINCIPAL . 'assets/principal'; ?>/css/bootstrap.min.css">
     <!-- Owl Theme Default Min CSS -->

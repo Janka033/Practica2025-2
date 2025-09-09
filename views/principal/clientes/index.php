@@ -20,49 +20,55 @@
     <div class="card-body">
         <h4 class="card-title">Tus reservas</h4>
         <hr>
-        <?php if (!empty($_SESSION['reserva'])) { ?>
-<div
-    class="alert alert-warning"
-    role="alert"
->
-    <strong>Reserva Pendiente</strong> <a href="<?php echo RUTA_PRINCIPAL . 'reserva/pendiente'; ?>">CLICK AQUI</a>
-</div>
 
-            <?php } ?>
-        <div
-            class="alert alert-info alert-dismissible fade show"
-            role="alert"
-        >
-            <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="alert"
-                aria-label="Close"
-            ></button>
-        
+        <?php
+        // Ruta a la página principal (no hardcodear localhost)
+        $rutaIniciarReserva = RUTA_PRINCIPAL; // Asegúrate que la constante exista
+        ?>
+
+        <?php if (!empty($_SESSION['reserva'])) { ?>
+            <div class="alert alert-warning" role="alert">
+                <strong>Reserva Pendiente</strong>
+                <a href="<?php echo RUTA_PRINCIPAL . 'reserva/pendiente'; ?>" class="fw-semibold ms-2">CLICK AQUI</a>
+            </div>
+        <?php } else { ?>
+            <div class="alert alert-warning d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3"
+                 role="alert" style="border-left:6px solid #f0ad4e;">
+                <div>
+                    <strong>¿Sin reserva activa?</strong> Empieza ahora mismo y asegura tu habitación.
+                </div>
+                <div>
+                    <a href="<?php echo $rutaIniciarReserva; ?>"
+                       class="btn btn-sm btn-primary px-4 fw-semibold shadow-sm"
+                       style="border-radius:30px;">
+                        Ir a reservar
+                        <i class='bx bx-right-arrow-alt align-middle'></i>
+                    </a>
+                </div>
+            </div>
+        <?php } ?>
+
+        <div class="alert alert-info alert-dismissible fade show" role="alert">
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             <strong>Información</strong> Si deseas dejar una calificación doble click en la habitación
         </div>
-        
+
         <div class="table-responsive">
             <table class="table table-primary nowrap" id="tblReservas" style="width: 100%;">
                 <thead>
                     <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Fecha Llegada</th>
-                        <th scope="col">Fecha Salida</th>
-                        <th scope="col">Monto</th>
-                        <th scope="col">Habitación</th>
+                        <th>#</th>
+                        <th>Fecha Llegada</th>
+                        <th>Fecha Salida</th>
+                        <th>Monto</th>
+                        <th>Habitación</th>
                     </tr>
                 </thead>
-                <tbody>
-                </tbody>
+                <tbody></tbody>
             </table>
         </div>
 
     </div>
-</div>
-
-<div class="" id="" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
 </div>
 
 <?php include_once 'views/template/footer-cliente.php'; ?>
@@ -71,5 +77,4 @@
 <script src="<?php echo RUTA_PRINCIPAL . 'assets/admin/js/pages/clientes/reservas.js'; ?>"></script>
 
 </body>
-
 </html>

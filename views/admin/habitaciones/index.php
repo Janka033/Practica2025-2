@@ -76,7 +76,7 @@
                             </div>
                             <span id="errorDescripcion" class="text-danger"></span>
                         </div>
-                        
+
                         <div class="col-md-6 mb-3">
                             <div class="form-group">
                                 <label for="foto">Foto <span class="text-danger">*</span></label>
@@ -86,6 +86,37 @@
                             <div id="containerPreview">
                             </div>
                         </div>
+
+                        <!-- ====== BEGIN: Galería adicional integrada ====== -->
+                        <div class="col-12 mb-4" id="galeriaAdicional" style="display:none;">
+                            <hr>
+                            <h5 class="mb-3">
+                                Galería adicional
+                                <small class="text-muted d-block" style="font-size:12px;">
+                                    (Arrastra imágenes JPG/PNG. Tamaño recomendado aprox. 1200x800. Máx. 10 por subida)
+                                </small>
+                            </h5>
+                            <form action="<?php echo RUTA_ADMIN . 'habitaciones/galeriaImagenes'; ?>" class="dropzone dz-inline" id="dzGaleriaInline">
+                                <input type="hidden" id="idHabitacionGaleria" name="idHabitacion">
+                            </form>
+                            <div class="text-end mt-3">
+                                <button class="btn btn-primary btn-sm" type="button" id="btnSubirGaleria">
+                                    Subir Imágenes
+                                    <i class="fas fa-upload ms-1"></i>
+                                </button>
+                            </div>
+
+                            <div class="card mt-3">
+                                <div class="card-body">
+                                    <h6 class="mb-3">Imágenes cargadas</h6>
+                                    <div class="row g-3" id="containerGaleriaInline">
+                                        <!-- Miniaturas se insertan por JS -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- ====== END: Galería adicional integrada ====== -->
+
                     </div>
                     <div class="text-end">
                         <button class="btn btn-danger" type="button" id="btnNuevo">Nuevo</button>
@@ -114,7 +145,7 @@
                 </div>
                 <div class="card mt-3">
                     <div class="card-body">
-                        <div class="row justify-content-between" id="containerGaleria">                            
+                        <div class="row justify-content-between" id="containerGaleria">
                         </div>
                     </div>
                 </div>

@@ -33,6 +33,9 @@ include_once 'views/template/portada.php'; ?>
                                     </li>
                                 </ul>
                                 <span class="price"><?= $habitacion['precio'] . '/Noche'; ?></span>
+                                <span class="capacity">
+                                    <i class="bx bx-group"></i>
+                                    Capacidad: <?= $habitacion['capacidad']; ?> <?= ($habitacion['capacidad'] == 1 ? 'persona' : 'personas'); ?></span>
                                 <!-- <a href="<?php echo RUTA_PRINCIPAL . 'habitacion/detalle/' . $habitacion['slug']; ?>" class="default-btn">
                                     DETALLE
                                     <i class="flaticon-right"></i>

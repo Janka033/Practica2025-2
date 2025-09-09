@@ -177,6 +177,122 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
+// ====== NUEVO: Galería integrada en el formulario ======
+  // Solo se activará cuando la habitación ya tenga ID (modo edición).
+  let dzInline = new Dropzone("#dzGaleriaInline", {
+    dictDefaultMessage: "Arrastra aquí las imágenes adicionales",
+    acceptedFiles: ".png, .jpg, .jpeg",
+    maxFiles: 10,
+    addRemoveLinks: true,
+    autoProcessQueue: false,
+    parallelUploads: 10,
+  });
+
+  const btnSubirGaleria = document.getElementById("btnSubirGaleria");
+  const idHabitacionGaleria = document.getElementById("idHabitacionGaleria");
+  const galeriaAdicional = document.getElementById("galeriaAdicional");
+  const containerGaleriaInline = document.getElementById("containerGaleriaInline");
+
+  if (btnSubirGaleria) {
+    btnSubirGaleria.addEventListener("click", function () {
+      if (!idHabitacionGaleria.value) {
+        Swal.fire("Aviso", "Primero guarda la habitación (no tiene ID).", "info");
+        return;
+      }
+      dzInline.processQueue();
+    });
+  }
+
+  dzInline.on("sending", function(file, xhr, formData) {
+    // Aseguramos que el id se envíe (ya hay un input hidden, pero por seguridad)
+    formData.append("idHabitacion", idHabitacionGaleria.value);
+  });
+
+  dzInline.on("complete", function (file) {
+    dzInline.removeFile(file);
+  });
+
+  dzInline.on("queuecomplete", function() {
+    Swal.fire("Éxito", "Imágenes subidas", "success");
+    cargarGaleriaInline(idHabitacionGaleria.value);
+  });
+
+  function cargarGaleriaInline(id) {
+    if (!id) return;
+    const url = base_url + "habitaciones/verGaleria/" + id;
+    const http = new XMLHttpRequest();
+    http.open("GET", url, true);
+    http.send();
+    http.onreadystatechange = function () {
+      if (this.readyState == 4 && this.status == 200) {
+        const res = JSON.parse(this.responseText);
+        let html = "";
+        let destino = ruta_principal + "assets/img/habitaciones/" + id + "/";
+        if (res.length === 0) {
+          html = '<p class="text-muted">No hay imágenes adicionales.</p>';
+        } else {
+          for (let i = 0; i < res.length; i++) {
+            const fullPath = id + "/" + res[i];
+            html += `
+              <div class="col-6 col-sm-4 col-md-3">
+                <div class="position-relative border rounded p-1 h-100 d-flex flex-column">
+                  <img src="${destino + res[i]}" class="img-fluid mb-2 rounded" style="object-fit:cover; aspect-ratio:1/1;" alt="img">
+                  <button class="btn btn-sm btn-outline-danger w-100 mt-auto btnEliminarImagen" 
+                      type="button" data-id="${id}" data-name="${fullPath}">
+                      <i class="fas fa-trash-alt"></i> Eliminar
+                  </button>
+                </div>
+              </div>`;
+          }
+        }
+        containerGaleriaInline.innerHTML = html;
+        activarBotonesEliminarInline();
+      }
+    };
+  }
+
+  function activarBotonesEliminarInline() {
+    const btns = containerGaleriaInline.querySelectorAll(".btnEliminarImagen");
+    btns.forEach(b => {
+      b.addEventListener("click", function() {
+        const nombre = this.getAttribute("data-name");
+        eliminarImgGaleria(nombre);
+      });
+    });
+  }
+
+  function eliminarImgGaleria(rutaParcial) {
+    Swal.fire({
+      title: "¿Eliminar imagen?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Sí, eliminar",
+      cancelButtonText: "Cancelar"
+    }).then(result => {
+      if (!result.isConfirmed) return;
+      fetch(base_url + "habitaciones/eliminarImg", {
+        method: "POST",
+        body: JSON.stringify({ url: rutaParcial }),
+      })
+      .then(r => r.json())
+      .then(json => {
+        if (json.icono === "success") {
+          Swal.fire("Eliminada", json.msg, "success");
+          cargarGaleriaInline(idHabitacionGaleria.value);
+        } else {
+          Swal.fire("Error", json.msg, "error");
+        }
+      })
+      .catch(() => Swal.fire("Error", "No se pudo eliminar", "error"));
+    });
+  }
+
+  // Exponer funciones si necesitas (no obligatorio)
+  window.cargarGaleriaInline = cargarGaleriaInline;
+
+  // ====== FIN: Galería integrada ======
+
+
 function deleteImg() {
   foto.value = "";
   containerPreview.innerHTML = "";
@@ -275,5 +391,6 @@ function eliminar(idHabit, nombre) {
         agregarImages(idHabit);
       }
     }
+    
   };
 }
