@@ -13,12 +13,7 @@ include_once 'views/template/header-principal.php'; ?>
                             <div class="eorik-slider-text overflow-hidden one eorik-slider-text-one">
                                 <h1><?php echo $slider['titulo']; ?></h1>
                                 <span><?php echo $slider['subtitulo']; ?></span>
-                                <div class="slider-btn">
-                                    <a class="default-btn" href="<?php echo $slider['url']; ?>">
-                                        Más Información
-                                        <i class="flaticon-right"></i>
-                                    </a>
-                                </div>
+                                
                             </div>
                         </div>
                     </div>
