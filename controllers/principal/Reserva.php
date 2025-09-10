@@ -77,10 +77,11 @@ class Reserva extends Controller
     }
 
     //LISTAR RESERVAS
-    public function listarReservas() {
+    public function listarReservas()
+    {
         $data = $this->model->listarReservas($_SESSION['id_usuario']);
         $item = 1;
-        for ($i=0; $i < count($data); $i++) { 
+        for ($i = 0; $i < count($data); $i++) {
             $data[$i]['item'] = $item;
             $item++;
         }
@@ -194,7 +195,9 @@ class Reserva extends Controller
                 $files = scandir($folder);
                 if ($files !== false) {
                     foreach ($files as $f) {
-                        if ($f === '.' || $f === '..') { continue; }
+                        if ($f === '.' || $f === '..') {
+                            continue;
+                        }
                         $ext = strtolower(pathinfo($f, PATHINFO_EXTENSION));
                         if (in_array($ext, ['jpg', 'jpeg', 'png', 'gif', 'webp'])) {
                             $galeria[] = [
@@ -211,10 +214,9 @@ class Reserva extends Controller
         // Cálculo total (NOTA: Estás cobrando (días + 1). Revisa si es tu regla real de negocio)
         $fecha1 = new DateTime($_SESSION['reserva']['f_llegada']);
         $fecha2 = new DateTime($_SESSION['reserva']['f_salida']);
-        $cantidad = $fecha2->diff($fecha1);
+        $noches = $fecha2->diff($fecha1)->days; // esto sí es el número de noches
         $precio = floatval($data['habitacion']['precio']);
-        $data['total'] = ($cantidad->d + 1) * $precio;
-
+        $data['total'] = $noches * $precio;
         $this->views->getView('principal/clientes/reservas/pendiente', $data);
     }
 
@@ -274,14 +276,14 @@ class Reserva extends Controller
         $array = json_decode($datos, true);
 
         if (empty($_SESSION['reserva'])) {
-            echo json_encode(['tipo'=>'error','msg'=>'No hay reserva en sesión']);
+            echo json_encode(['tipo' => 'error', 'msg' => 'No hay reserva en sesión']);
             die();
         }
 
         // --- NUEVO: validar
         $val = $this->validarRangoFechas($_SESSION['reserva']['f_llegada'], $_SESSION['reserva']['f_salida']);
         if (!$val['ok']) {
-            echo json_encode(['tipo'=>'error','msg'=>'Fechas inválidas']);
+            echo json_encode(['tipo' => 'error', 'msg' => 'Fechas inválidas']);
             die();
         }
 
@@ -343,7 +345,7 @@ class Reserva extends Controller
         // --- NUEVO: validar fechas
         $val = $this->validarRangoFechas($_SESSION['reserva']['f_llegada'], $_SESSION['reserva']['f_salida']);
         if (!$val['ok']) {
-            echo json_encode(['type'=>'error','msg'=>'Fechas inválidas']);
+            echo json_encode(['type' => 'error', 'msg' => 'Fechas inválidas']);
             die();
         }
 
@@ -358,8 +360,20 @@ class Reserva extends Controller
             die();
         }
 
+        // === NUEVO BLOQUE: validar disponibilidad ===
+        $disponible = $this->model->getDisponible($f_llegada, $f_salida, $id_habitacion);
+        if (!empty($disponible)) {
+            echo json_encode([
+                'type' => 'error',
+                'msg' => 'Esta habitación no está disponible para las fechas seleccionadas. Selecciona otra fecha u otra habitación.'
+            ]);
+            die();
+        }
+
         $dias = (int) $val['llegada']->diff($val['salida'])->days;
-        if ($dias < 1) { $dias = 1; }
+        if ($dias < 1) {
+            $dias = 1;
+        }
         $precio = (float) $hab['precio'];
         $monto  = $dias * $precio;
         $desc   = 'Reserva del ' . $f_llegada . ' al ' . $f_salida;

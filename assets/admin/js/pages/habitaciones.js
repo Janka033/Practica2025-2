@@ -18,14 +18,18 @@ const capacidad = document.querySelector("#capacidad");
 const numero = document.querySelector("#numero");
 
 // Modal galería (modal original)
-const modalGaleria = new bootstrap.Modal(document.getElementById("modalGaleria"));
+const modalGaleria = new bootstrap.Modal(
+  document.getElementById("modalGaleria")
+);
 
 // Elementos galería inline
 const galeriaAdicional = document.getElementById("galeriaAdicional");
 const dzGaleriaInlineEl = document.getElementById("dzGaleriaInline");
 const btnSubirGaleria = document.getElementById("btnSubirGaleria");
 const idHabitacionGaleria = document.getElementById("idHabitacionGaleria");
-const containerGaleriaInline = document.getElementById("containerGaleriaInline");
+const containerGaleriaInline = document.getElementById(
+  "containerGaleriaInline"
+);
 
 document.addEventListener("DOMContentLoaded", function () {
   // DataTable
@@ -50,11 +54,11 @@ document.addEventListener("DOMContentLoaded", function () {
       {
         data: null,
         render: function (data, type) {
-            const icon =
-              parseInt(data.capacidad) > 1
-                ? '<i class="fas fa-users"></i>'
-                : '<i class="fas fa-user"></i>';
-            return `<span class="badge bg-primary">${data.capacidad} - ${icon}</span>`;
+          const icon =
+            parseInt(data.capacidad) > 1
+              ? '<i class="fas fa-users"></i>'
+              : '<i class="fas fa-user"></i>';
+          return `<span class="badge bg-primary">${data.capacidad} - ${icon}</span>`;
         },
       },
       {
@@ -134,7 +138,10 @@ document.addEventListener("DOMContentLoaded", function () {
         <button class="btn btn-danger" type="button" onclick="deleteImg()"><i class="fas fa-trash"></i></button>`;
     } else {
       foto.value = "";
-      alertaPersonalizada("warning", "SOLO SE PERMITEN IMG DE TIPO PNG-JPG-JPEG");
+      alertaPersonalizada(
+        "warning",
+        "SOLO SE PERMITEN IMG DE TIPO PNG-JPG-JPEG"
+      );
     }
   });
 
@@ -295,12 +302,15 @@ function agregarImages(idHabitacion) {
       const res = JSON.parse(this.responseText);
       document.querySelector("#idHabitacion").value = idHabitacion;
       let html = "";
-      const destino = ruta_principal + "assets/img/habitaciones/" + idHabitacion + "/";
+      const destino =
+        ruta_principal + "assets/img/habitaciones/" + idHabitacion + "/";
       for (let i = 0; i < res.length; i++) {
         html += `<div class="col-md-3">
           <img class="img-thumbnail" src="${destino + res[i]}">
           <div class="d-grid">
-            <button class="btn btn-danger btnEliminarImagen" type="button" data-id="${idHabitacion}" data-name="${idHabitacion + "/" + res[i]}">Eliminar</button>
+            <button class="btn btn-danger btnEliminarImagen" type="button" data-id="${idHabitacion}" data-name="${
+          idHabitacion + "/" + res[i]
+        }">Eliminar</button>
           </div>
         </div>`;
       }
@@ -312,15 +322,13 @@ function agregarImages(idHabitacion) {
 }
 
 function eliminarImagen() {
-  document
-    .querySelectorAll(".btnEliminarImagen")
-    .forEach((btn) =>
-      btn.addEventListener("click", function () {
-        const idHabit = this.getAttribute("data-id");
-        const nombre = this.getAttribute("data-name");
-        eliminar(idHabit, nombre);
-      })
-    );
+  document.querySelectorAll(".btnEliminarImagen").forEach((btn) =>
+    btn.addEventListener("click", function () {
+      const idHabit = this.getAttribute("data-id");
+      const nombre = this.getAttribute("data-name");
+      eliminar(idHabit, nombre);
+    })
+  );
 }
 
 function eliminar(idHabit, nombre) {
@@ -358,9 +366,11 @@ function cargarGaleriaInline(idHab) {
           const fullPath = idHab + "/" + res[i];
           html += `<div class="col-6 col-sm-4 col-md-3">
             <div class="position-relative border rounded p-1 h-100 d-flex flex-column">
-              <img src="${destino + res[i]}" class="img-fluid mb-2 rounded" style="object-fit:cover;aspect-ratio:1/1;" alt="img">
-              <button class="btn btn-sm btn-outline-danger w-100 mt-auto btnEliminarImagenInline" data-name="${fullPath}">
-                <i class="fas fa-trash-alt"></i> Eliminar
+              <img src="${
+                destino + res[i]
+              }" class="img-fluid mb-2 rounded" style="object-fit:cover;aspect-ratio:1/1;" alt="img">
+              <button type="button" class="btn btn-sm btn-outline-danger w-100 mt-auto btnEliminarImagenInline" data-name="${fullPath}">
+               <i class="fas fa-trash-alt"></i> Eliminar
               </button>
             </div>
           </div>`;
@@ -373,14 +383,13 @@ function cargarGaleriaInline(idHab) {
 }
 
 function activarBotonesEliminarInline() {
-  document
-    .querySelectorAll(".btnEliminarImagenInline")
-    .forEach((b) =>
-      b.addEventListener("click", function () {
-        const rutaParcial = this.getAttribute("data-name");
-        eliminarImgGaleria(rutaParcial);
-      })
-    );
+  document.querySelectorAll(".btnEliminarImagenInline").forEach((b) =>
+    b.addEventListener("click", function (e) {
+      e.preventDefault(); // evita cualquier submit accidental
+      const rutaParcial = this.getAttribute("data-name");
+      eliminarImgGaleria(rutaParcial);
+    })
+  );
 }
 
 function eliminarImgGaleria(rutaParcial) {

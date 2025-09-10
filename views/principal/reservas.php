@@ -77,11 +77,33 @@ include_once 'views/template/portada.php'; ?>
                                     <h3><?php echo $data['habitacion']['estilo']; ?></h3>
                                     <span class="price"><?php echo $data['habitacion']['precio']; ?>/noche</span>
                                     <?php if (!empty($_SESSION['id_usuario'])) { ?>
-                                        <a href="<?php echo RUTA_PRINCIPAL . 'reserva/pendiente'; ?>" class="default-btn">
-                                            Procesar
-                                            <i class="flaticon-right"></i>
-                                        </a>
-                                    <?php }else{ ?>
+                                        <?php if ($data['tipo'] === 'success') { ?>
+                                            <a href="<?php echo RUTA_PRINCIPAL . 'reserva/pendiente'; ?>" class="default-btn">
+                                                Procesar
+                                                <i class="flaticon-right"></i>
+                                            </a>
+                                        <?php } else { ?>
+                                            <button type="button" class="default-btn" id="btnNoDisponible">
+                                                Procesar
+                                                <i class="flaticon-right"></i>
+                                            </button>
+                                            <script>
+                                                document.addEventListener('DOMContentLoaded', function() {
+                                                    var btn = document.getElementById('btnNoDisponible');
+                                                    if (btn) {
+                                                        btn.addEventListener('click', function(e) {
+                                                            e.preventDefault();
+                                                            if (typeof Swal !== 'undefined') {
+                                                                Swal.fire('No disponible', 'Esta habitación no está disponible para las fechas seleccionadas. Selecciona otra fecha u otra habitación.', 'error');
+                                                            } else {
+                                                                alert('Esta habitación no está disponible para las fechas seleccionadas. Selecciona otra fecha u otra habitación.');
+                                                            }
+                                                        });
+                                                    }
+                                                });
+                                            </script>
+                                        <?php } ?>
+                                    <?php } else { ?>
                                         <a href="<?php echo RUTA_PRINCIPAL . 'login'; ?>" class="default-btn">
                                             Login
                                             <i class="flaticon-right"></i>
