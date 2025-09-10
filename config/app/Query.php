@@ -7,32 +7,32 @@ class Query extends Conexion{
         $this->pdo = $this->con->conectar();
     }
 
-    //RECUPERAR UN SOLO REGISTRO
-    public function select($sql){
-        $result = $this->pdo->prepare($sql);
-        $result->execute();
-        return $result->fetch(PDO::FETCH_ASSOC);
-    }
-
-    public function update($sql) {
+    //RECUPERAR UN SOLO REGISTRO (ahora con parámetros opcionales)
+    public function select($sql, $params = []){
         $stmt = $this->pdo->prepare($sql);
-        return $stmt->execute();
+        $stmt->execute($params);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    //RECUPERAR TODOS LOS REGISTROS
-    public function selectAll($sql){
-        $result = $this->pdo->prepare($sql);
-        $result->execute();
-        return $result->fetchAll(PDO::FETCH_ASSOC);
+    public function update($sql, $params = []) {
+        $stmt = $this->pdo->prepare($sql);
+        return $stmt->execute($params);
+    }
+
+    //RECUPERAR TODOS LOS REGISTROS (ahora con parámetros opcionales)
+    public function selectAll($sql, $params = []){
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute($params);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     //REGISTRAR
     public function insert($sql, $array){
-        $result = $this->pdo->prepare($sql);
-        $data = $result->execute($array);
+        $stmt = $this->pdo->prepare($sql);
+        $data = $stmt->execute($array);
         if ($data) {
             $res = $this->pdo->lastInsertId();
-        }else{
+        } else {
             $res = 0;
         }
         return $res;
@@ -40,11 +40,11 @@ class Query extends Conexion{
 
     //MODIFICAR, ELIMINAR
     public function save($sql, $array){
-        $result = $this->pdo->prepare($sql);
-        $data = $result->execute($array);
+        $stmt = $this->pdo->prepare($sql);
+        $data = $stmt->execute($array);
         if ($data) {
             $res = 1;
-        }else{
+        } else {
             $res = 0;
         }
         return $res;

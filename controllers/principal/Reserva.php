@@ -94,8 +94,8 @@ class Reserva extends Controller
         if (isset($_GET['f_llegada']) && isset($_GET['f_salida']) && isset($_GET['habitacion'])) {
             $f_llegada_raw = $_GET['f_llegada'];
             $f_salida_raw  = $_GET['f_salida'];
-            $habitacion    = strClean($_GET['habitacion']);
-
+            $habitacion = strClean($_GET['habitacion']);
+            $habitacion = (int)$habitacion; // casteo
             // --- CAMBIO: Validación temprana de campos vacíos
             if (empty($f_llegada_raw) || empty($f_salida_raw) || empty($habitacion)) {
                 header('Location: ' . RUTA_PRINCIPAL . '?respuesta=warning');
